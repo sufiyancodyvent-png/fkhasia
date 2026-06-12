@@ -1,0 +1,100 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Icon from '../icons/Icon'
+import { login, saveSession } from '../../lib/api'
+
+function AuthForm({ mode = 'login' }) {
+  const navigate = useNavigate()
+  const isRegister = mode === 'register'
+  const [form, setForm] = useState({ email: '', password: '' })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const updateField = (field) => (event) => {
+    setForm((current) => ({ ...current, [field]: event.target.value }))
+  }
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    setError('')
+    setLoading(true)
+
+    try {
+      const session = await login(form.email, form.password)
+      saveSession(session)
+      navigate(session.user.role === 'admin' || session.user.role === 'manager' ? '/admin' : '/employee/dashboard')
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <section className="auth-form-panel" aria-label="Authentication">
+      <div className="auth-card">
+        <div className="auth-copy">
+          <h2>{isRegister ? 'Create Account' : 'Sign In'}</h2>
+          <p>
+            {isRegister
+              ? 'Register Your Workspace Profile To Access Your Dashboard'
+              : 'Please Enter Your Details To Access Your Dashboard'}
+          </p>
+        </div>
+
+        <form className="auth-form" onSubmit={handleLogin}>
+          {isRegister && (
+            <label>
+              Full Name
+              <span className="input-shell">
+                <Icon name="user" size={21} />
+                <input type="text" placeholder="Your Full Name" />
+              </span>
+            </label>
+          )}
+          <label>
+            Email Address
+            <span className="input-shell">
+              <Icon name="mail" size={21} />
+              <input type="email" placeholder="Name@Company.Com" value={form.email} onChange={updateField('email')} required />
+            </span>
+          </label>
+          <label>
+            Password
+            <span className="input-shell">
+              <Icon name="lock" size={21} />
+              <input type="password" placeholder="********" value={form.password} onChange={updateField('password')} required />
+              <Icon name="eye" size={21} />
+            </span>
+          </label>
+
+          {isRegister && (
+            <label>
+              Confirm Password
+              <span className="input-shell">
+                <Icon name="lock" size={21} />
+                <input type="password" placeholder="********" />
+              </span>
+            </label>
+          )}
+
+          {!isRegister && (
+            <label className="check-row">
+              <input type="checkbox" />
+              <span>Stay Signed In</span>
+            </label>
+          )}
+
+          {error && <p className="auth-error">{error}</p>}
+
+          <button className="primary-action" type="submit" disabled={loading}>
+            {loading ? 'Signing In...' : isRegister ? 'Create Secure Account' : 'Login To Platform'}
+            <Icon name="arrowRight" size={22} />
+          </button>
+        </form>
+      </div>
+    </section>
+  )
+}
+
+export default AuthForm

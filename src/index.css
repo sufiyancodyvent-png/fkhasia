@@ -1,0 +1,40 @@
+:root {
+  --app-font-xs: 11px;
+  --app-font-sm: 12px;
+  --app-font-base: 13px;
+  --app-font-md: 14px;
+  --app-font-lg: 16px;
+  --app-font-xl: 18px;
+  --app-font-2xl: 22px;
+  --app-space-xs: 6px;
+  --app-space-sm: 10px;
+  --app-space-md: 14px;
+  --app-space-lg: 18px;
+  --app-space-xl: 24px;
+  --app-card-radius: 8px;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: var(--app-font-base);
+  color: #10182f;
+  background: #f7f9fc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  min-width: 320px;
+  background: #f7f9fc;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+}

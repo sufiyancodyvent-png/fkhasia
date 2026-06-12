@@ -1,0 +1,60 @@
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import express from 'express'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { env } from './config/env.js'
+import authRoutes from './routes/authRoutes.js'
+import attendanceRoutes from './routes/attendanceRoutes.js'
+import dashboardRoutes from './routes/dashboardRoutes.js'
+import departmentRoutes from './routes/departmentRoutes.js'
+import settingsRoutes from './routes/settingsRoutes.js'
+import userRoutes from './routes/userRoutes.js'
+import { errorHandler, notFound } from './middleware/errorHandler.js'
+
+const app = express()
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const rootDir = path.resolve(__dirname, '../..')
+
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+}))
+app.use(cors({
+  origin: env.clientOrigin,
+  credentials: true,
+}))
+app.use(express.json({ limit: '1mb' }))
+app.use(cookieParser())
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 300,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+}))
+
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true, service: 'fkhasia-api' })
+})
+
+app.use('/api/auth', authRoutes)
+app.use('/api/attendance', attendanceRoutes)
+app.use('/api/dashboard', dashboardRoutes)
+app.use('/api/departments', departmentRoutes)
+app.use('/api/settings', settingsRoutes)
+app.use('/api/users', userRoutes)
+
+const distDir = path.join(rootDir, 'dist')
+app.use(express.static(distDir))
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api')) return next()
+  res.sendFile(path.join(distDir, 'index.html'), (err) => {
+    if (err) next()
+  })
+})
+
+app.use(notFound)
+app.use(errorHandler)
+
+export default app

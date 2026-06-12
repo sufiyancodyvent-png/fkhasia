@@ -1,0 +1,2670 @@
+/* Final employee dashboard overrides. Imported after App.css on purpose. */
+.employee-shell {
+  display: grid !important;
+  min-height: 100vh !important;
+  grid-template-columns: 64px minmax(0, 1fr) !important;
+  background: #f7f9fc !important;
+  overflow-x: hidden !important;
+}
+
+.employee-shell.nav-expanded {
+  grid-template-columns: 230px minmax(0, 1fr) !important;
+}
+
+.employee-shell .employee-main,
+.employee-shell.nav-expanded .employee-main {
+  grid-column: 2 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: hidden !important;
+}
+
+.employee-shell .employee-rail,
+.employee-shell.nav-expanded .employee-rail {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 64px !important;
+  min-width: 64px !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #081a38 !important;
+  border-right: 0 !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  z-index: 20 !important;
+}
+
+.employee-shell.nav-expanded .employee-rail {
+  width: 230px !important;
+  min-width: 230px !important;
+  background: #fff !important;
+  border-right: 1px solid #dfe6ef !important;
+}
+
+.employee-shell .employee-rail::before,
+.employee-shell.nav-expanded .employee-rail::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 auto 0 0 !important;
+  width: 64px !important;
+  height: 100% !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  background: #081a38 !important;
+  z-index: 1 !important;
+}
+
+.employee-shell .employee-rail-brand,
+.employee-shell.nav-expanded .employee-rail-brand,
+.employee-shell .employee-rail-section,
+.employee-shell.nav-expanded .employee-rail-section {
+  display: none !important;
+}
+
+.employee-rail-topline,
+.employee-rail-logo-wrap {
+  position: absolute !important;
+  top: 13px !important;
+  left: 10px !important;
+  display: grid !important;
+  width: 44px !important;
+  height: 44px !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  z-index: 4 !important;
+}
+
+.employee-rail-logo-wrap img {
+  width: 112px !important;
+  height: 44px !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.employee-menu-panel {
+  position: absolute !important;
+  inset: 0 0 0 64px !important;
+  display: none !important;
+  width: 166px !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  background: #fff !important;
+  z-index: 2 !important;
+}
+
+.employee-shell.nav-expanded .employee-menu-panel {
+  display: block !important;
+}
+
+.employee-panel-brand {
+  height: 104px !important;
+  display: grid !important;
+  place-items: center start !important;
+  padding: 0 13px !important;
+  border-bottom: 1px solid #111827 !important;
+}
+
+.employee-panel-logo {
+  display: block !important;
+  width: 138px !important;
+  height: 54px !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.employee-panel-brand strong {
+  display: block !important;
+  margin: 0 !important;
+  color: #07142a !important;
+  font-size: 17px !important;
+  font-weight: 850 !important;
+  line-height: 1 !important;
+}
+
+.employee-panel-brand span {
+  display: block !important;
+  width: 132px !important;
+  margin-top: 10px !important;
+  color: #5f7090 !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+}
+
+.employee-panel-menu {
+  padding: 15px 10px 0 !important;
+}
+
+.employee-panel-menu p {
+  margin: 0 0 12px 10px !important;
+  color: #93a2bb !important;
+  font-size: 9px !important;
+  font-weight: 850 !important;
+  letter-spacing: 2.4px !important;
+  line-height: 1 !important;
+}
+
+.employee-panel-menu button {
+  display: grid !important;
+  width: 146px !important;
+  min-height: 38px !important;
+  grid-template-columns: 20px minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 0 11px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  color: #2563eb !important;
+  background: #eaf2ff !important;
+  text-align: left !important;
+}
+
+.employee-panel-menu button svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.employee-panel-menu button span {
+  display: block !important;
+  overflow: hidden !important;
+  color: inherit !important;
+  font-size: 10px !important;
+  font-weight: 850 !important;
+  line-height: 1 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.employee-shell .employee-rail-nav,
+.employee-shell.nav-expanded .employee-rail-nav {
+  position: absolute !important;
+  top: 143px !important;
+  left: 0 !important;
+  right: auto !important;
+  display: block !important;
+  width: 64px !important;
+  min-width: 64px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  z-index: 4 !important;
+}
+
+.employee-shell .employee-rail-nav::before,
+.employee-shell.nav-expanded .employee-rail-nav::before,
+.employee-shell .employee-rail-nav > button > span,
+.employee-shell.nav-expanded .employee-rail-nav > button > span {
+  display: none !important;
+}
+
+.employee-shell .employee-rail-nav > button,
+.employee-shell.nav-expanded .employee-rail-nav > button {
+  display: grid !important;
+  width: 64px !important;
+  max-width: 64px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  grid-template-columns: 64px !important;
+  place-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: #fff !important;
+  background: transparent !important;
+}
+
+.employee-shell .employee-rail-nav > button svg,
+.employee-shell.nav-expanded .employee-rail-nav > button svg {
+  width: 18px !important;
+  height: 18px !important;
+  justify-self: center !important;
+}
+
+.employee-shell .employee-rail-nav > button.active,
+.employee-shell.nav-expanded .employee-rail-nav > button.active {
+  color: #60a5fa !important;
+  background: #eaf2ff !important;
+}
+
+.employee-shell.nav-expanded .employee-rail-nav > button.active {
+  background: transparent !important;
+}
+
+.employee-rail-bottom {
+  position: absolute !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  display: block !important;
+  width: 64px !important;
+  min-width: 64px !important;
+  z-index: 4 !important;
+}
+
+.employee-rail-bottom button {
+  display: grid !important;
+  width: 64px !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  place-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
+  border-radius: 0 !important;
+  color: #fff !important;
+  background: rgba(0, 0, 0, 0.07) !important;
+}
+
+.employee-rail-bottom button + button {
+  color: rgba(255, 255, 255, 0.2) !important;
+  background: transparent !important;
+}
+
+.employee-main .topbar.employee {
+  height: 74px !important;
+  min-height: 74px !important;
+  padding: 0 26px !important;
+}
+
+.employee-dashboard-ref {
+  padding: 22px 22px 36px !important;
+}
+
+.topbar.employee h1 {
+  font-size: 18px !important;
+}
+
+.topbar.employee p {
+  font-size: 10px !important;
+}
+
+.topbar.employee .icon-button {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+}
+
+.topbar.employee .avatar.slate {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 15px !important;
+}
+
+.edb-welcome-row {
+  margin-bottom: 20px !important;
+}
+
+.edb-welcome-row h2 {
+  font-size: 23px !important;
+}
+
+.edb-welcome-row p {
+  font-size: 14px !important;
+}
+
+.edb-clock strong {
+  font-size: 14px !important;
+}
+
+.edb-clock span {
+  font-size: 10px !important;
+}
+
+.edb-shift-grid {
+  display: grid !important;
+  grid-template-columns: minmax(230px, 285px) minmax(0, 1fr) !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+}
+
+.edb-goal-card {
+  min-height: 170px !important;
+  padding: 20px !important;
+}
+
+.edb-card-title h3 {
+  font-size: 16px !important;
+}
+
+.edb-goal-meter strong {
+  font-size: 28px !important;
+}
+
+.edb-goal-meter span {
+  font-size: 14px !important;
+}
+
+.edb-goal-label span {
+  font-size: 10px !important;
+}
+
+.edb-goal-label b {
+  font-size: 12px !important;
+}
+
+.edb-section-head h3 {
+  font-size: 16px !important;
+}
+
+.edb-section-head span {
+  font-size: 12px !important;
+}
+
+.edb-quick-card {
+  min-height: 145px !important;
+  padding: 20px !important;
+}
+
+.edb-quick-icon {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.edb-total-pill {
+  top: 20px !important;
+  right: 20px !important;
+  font-size: 10px !important;
+}
+
+.edb-quick-card h3 {
+  font-size: 16px !important;
+}
+
+.edb-quick-card p,
+.edb-quick-foot strong,
+.edb-quick-foot button {
+  font-size: 12px !important;
+}
+
+.edb-stat-card {
+  min-height: 78px !important;
+  padding: 18px 20px !important;
+}
+
+.edb-stat-card span,
+.edb-stat-card small {
+  font-size: 10px !important;
+}
+
+.edb-stat-card strong {
+  font-size: 19px !important;
+}
+
+.edb-log-head h2 {
+  font-size: 18px !important;
+}
+
+.edb-log-table th {
+  font-size: 10px !important;
+}
+
+.edb-log-table td {
+  font-size: 12px !important;
+}
+
+.edb-shift-card {
+  display: grid !important;
+  min-width: 0 !important;
+  min-height: 170px !important;
+  grid-template-columns: minmax(0, 1fr) 208px !important;
+  grid-template-rows: 42px 60px !important;
+  gap: 12px 16px !important;
+  padding: 20px 18px !important;
+  overflow: hidden !important;
+}
+
+.edb-shift-heading {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  min-width: 0 !important;
+  max-width: calc(100% - 118px) !important;
+}
+
+.edb-shift-heading h3 {
+  font-size: 16px !important;
+}
+
+.edb-shift-heading p {
+  margin-top: 7px !important;
+  overflow: hidden !important;
+  font-size: 12px !important;
+  line-height: 1.1 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.edb-offline {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+  align-self: start !important;
+  margin: 0 !important;
+  padding: 6px 12px !important;
+  font-size: 10px !important;
+}
+
+.edb-shift-actions {
+  display: grid !important;
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  grid-template-columns: minmax(120px, 1fr) minmax(120px, 1fr) minmax(128px, 0.75fr) !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+
+.edb-clock-in,
+.edb-break,
+.edb-active-timer {
+  min-width: 0 !important;
+  min-height: 60px !important;
+  border-radius: 8px !important;
+}
+
+.edb-clock-in,
+.edb-break {
+  gap: 8px !important;
+  font-size: 14px !important;
+}
+
+.edb-active-timer {
+  gap: 8px !important;
+  padding: 0 14px !important;
+}
+
+.edb-active-timer span {
+  font-size: 10px !important;
+}
+
+.edb-active-timer strong {
+  overflow: hidden !important;
+  font-size: 18px !important;
+  letter-spacing: 0.5px !important;
+  white-space: nowrap !important;
+}
+
+.edb-work-panel {
+  display: grid !important;
+  grid-column: 2 !important;
+  grid-row: 1 / 3 !important;
+  align-content: center !important;
+  gap: 14px !important;
+  min-width: 0 !important;
+  padding-left: 18px !important;
+  border-left: 1px solid #dfe6ef !important;
+}
+
+.edb-work-row {
+  grid-template-columns: 38px minmax(0, 1fr) !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+
+.edb-work-icon {
+  width: 38px !important;
+  height: 38px !important;
+}
+
+.edb-work-row small {
+  margin-bottom: 6px !important;
+  font-size: 10px !important;
+}
+
+.edb-work-row button {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  font-size: 12px !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.edb-work-row p {
+  overflow: hidden !important;
+  font-size: 12px !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 1450px) {
+  .edb-shift-grid {
+    grid-template-columns: minmax(230px, 285px) minmax(0, 1fr) !important;
+  }
+
+  .edb-shift-card {
+    grid-template-columns: minmax(0, 1fr) 208px !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .employee-shell,
+  .employee-shell.nav-expanded {
+    grid-template-columns: 72px minmax(0, 1fr) !important;
+  }
+
+  .employee-shell.nav-expanded .employee-rail {
+    width: 72px !important;
+    min-width: 72px !important;
+  }
+
+  .employee-shell.nav-expanded .employee-menu-panel {
+    display: none !important;
+  }
+
+  .employee-shell .employee-rail-nav,
+  .employee-shell.nav-expanded .employee-rail-nav {
+    top: 104px !important;
+  }
+
+  .employee-shell .employee-rail-nav > button,
+  .employee-shell.nav-expanded .employee-rail-nav > button {
+    height: 52px !important;
+    min-height: 52px !important;
+  }
+
+  .edb-shift-card {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto auto auto !important;
+  }
+
+  .edb-shift-heading,
+  .edb-offline,
+  .edb-shift-actions,
+  .edb-work-panel {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  .edb-shift-heading {
+    max-width: none !important;
+  }
+
+  .edb-work-panel {
+    padding-left: 0 !important;
+    border-left: 0 !important;
+  }
+}
+
+/* Employee attendance page compact scale. */
+.employee-attendance-page {
+  padding: 22px 22px 36px !important;
+  color: #07142a !important;
+}
+
+.employee-attendance-head {
+  gap: 18px !important;
+  margin-bottom: 22px !important;
+}
+
+.employee-attendance-head h1 {
+  font-size: 21px !important;
+  font-weight: 850 !important;
+  line-height: 1.05 !important;
+}
+
+.employee-attendance-head p {
+  margin-top: 6px !important;
+  font-size: 12px !important;
+}
+
+.employee-month-picker {
+  min-height: 36px !important;
+  gap: 9px !important;
+  padding: 0 13px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+}
+
+.employee-month-picker svg {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.employee-attendance-summary {
+  gap: 16px !important;
+  margin-bottom: 22px !important;
+}
+
+.employee-attendance-card {
+  min-height: 128px !important;
+  padding: 19px 20px !important;
+  border-radius: 12px !important;
+}
+
+.employee-attendance-card > div {
+  gap: 12px !important;
+}
+
+.employee-attendance-icon {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 10px !important;
+}
+
+.employee-attendance-icon svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.employee-attendance-card strong {
+  font-size: 10px !important;
+  letter-spacing: 0.8px !important;
+}
+
+.employee-attendance-card b {
+  margin-top: 18px !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+}
+
+.employee-attendance-card b small {
+  font-size: 14px !important;
+}
+
+.employee-attendance-card p {
+  margin-top: 12px !important;
+  font-size: 11px !important;
+}
+
+.employee-attendance-table {
+  border-radius: 12px !important;
+}
+
+.employee-attendance-row {
+  min-height: 58px !important;
+  padding: 0 22px !important;
+  column-gap: 14px !important;
+  font-size: 12px !important;
+}
+
+.employee-attendance-row.header {
+  min-height: 46px !important;
+  font-size: 10px !important;
+  letter-spacing: 1.2px !important;
+}
+
+.employee-attendance-row strong,
+.employee-attendance-row b {
+  font-size: 12px !important;
+}
+
+.employee-attendance-row em {
+  min-width: 74px !important;
+  padding: 5px 10px !important;
+  font-size: 10px !important;
+}
+
+.employee-attendance-row small {
+  font-size: 10px !important;
+}
+
+@media (max-width: 1180px) {
+  .employee-attendance-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .employee-attendance-page {
+    padding: 20px 16px 34px !important;
+  }
+
+  .employee-attendance-head {
+    flex-direction: column !important;
+  }
+
+  .employee-attendance-summary {
+    grid-template-columns: 1fr !important;
+  }
+
+  .employee-attendance-row {
+    grid-template-columns: 1fr !important;
+    gap: 7px !important;
+    min-height: auto !important;
+    padding: 16px 18px !important;
+  }
+
+  .employee-attendance-row.header {
+    display: none !important;
+  }
+}
+
+/* Admin-wide compact scale to match employee pages. */
+.dashboard-shell {
+  grid-template-columns: 64px minmax(0, 1fr) !important;
+  background: #f7f9fc !important;
+}
+
+.dashboard-shell.nav-expanded {
+  grid-template-columns: 290px minmax(0, 1fr) !important;
+}
+
+.dashboard-main {
+  min-width: 0 !important;
+  overflow-x: hidden !important;
+}
+
+.dashboard-main .topbar {
+  height: 74px !important;
+  min-height: 74px !important;
+  padding: 0 26px !important;
+}
+
+.dashboard-main .topbar h1 {
+  font-size: 18px !important;
+}
+
+.dashboard-main .topbar p {
+  font-size: 10px !important;
+}
+
+.dashboard-main .topbar .icon-button,
+.dashboard-main .topbar .notification {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+}
+
+.dashboard-main .topbar .avatar {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 15px !important;
+}
+
+.dashboard-shell .sidebar {
+  width: 64px !important;
+  min-width: 64px !important;
+}
+
+.dashboard-shell.nav-expanded .sidebar {
+  width: 290px !important;
+  min-width: 290px !important;
+}
+
+.dashboard-shell .sidebar::before,
+.dashboard-shell.nav-expanded .sidebar::before {
+  width: 64px !important;
+}
+
+.dashboard-shell .sidebar-brand,
+.dashboard-shell.nav-expanded .sidebar-brand {
+  height: 104px !important;
+  min-height: 104px !important;
+}
+
+.dashboard-shell .sidebar-brand .brand-mark.compact,
+.dashboard-shell.nav-expanded .sidebar-brand .brand-mark.compact {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  top: 15px !important;
+  left: 10px !important;
+}
+
+.dashboard-shell.nav-expanded .sidebar-brand > div:not(.brand-mark) {
+  left: 84px !important;
+  width: 175px !important;
+}
+
+.dashboard-shell.nav-expanded .sidebar-brand strong {
+  font-size: 17px !important;
+}
+
+.dashboard-shell.nav-expanded .sidebar-brand span {
+  font-size: 10px !important;
+}
+
+.dashboard-shell .side-nav,
+.dashboard-shell.nav-expanded .side-nav {
+  top: 104px !important;
+  width: 64px !important;
+}
+
+.dashboard-shell .side-nav .rail-item,
+.dashboard-shell.nav-expanded .side-nav .rail-item {
+  width: 64px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  grid-template-columns: 64px !important;
+}
+
+.dashboard-shell .side-nav .rail-item svg,
+.dashboard-shell.nav-expanded .side-nav .rail-item svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.dashboard-shell.nav-expanded .side-nav::before {
+  left: 84px !important;
+  font-size: 10px !important;
+}
+
+.dashboard-shell.nav-expanded .expanded-nav-list {
+  left: 76px !important;
+  right: 12px !important;
+  gap: 7px !important;
+}
+
+.dashboard-shell.nav-expanded .expanded-nav-list button {
+  min-height: 38px !important;
+  gap: 9px !important;
+  padding: 0 11px !important;
+  font-size: 10px !important;
+}
+
+.dashboard-shell.nav-expanded .expanded-nav-list button svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.dashboard-shell .logout-button,
+.dashboard-shell.nav-expanded .logout-button {
+  width: 64px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  grid-template-columns: 64px !important;
+}
+
+.dashboard-shell.nav-expanded .logout-button {
+  width: 290px !important;
+  grid-template-columns: 64px 1fr !important;
+}
+
+.dashboard-shell.nav-expanded .logout-button span {
+  font-size: 11px !important;
+}
+
+.dashboard-content,
+.admin-account-page,
+.attendance-page {
+  padding: 22px 22px 36px !important;
+}
+
+.section-heading,
+.admin-page-head,
+.attendance-page-head {
+  gap: 18px !important;
+  margin-bottom: 22px !important;
+}
+
+.section-heading h2,
+.admin-page-head h1,
+.attendance-title-row h1,
+.attendance-simple-page .admin-page-head h1 {
+  font-size: 21px !important;
+  line-height: 1.08 !important;
+}
+
+.eyebrow,
+.section-heading p,
+.admin-page-head p,
+.attendance-title-row p,
+.attendance-simple-page .admin-page-head p {
+  font-size: 11px !important;
+}
+
+.date-pill,
+.green-action,
+.attendance-filter-btn,
+.attendance-export-btn,
+.attendance-back-btn {
+  min-height: 36px !important;
+  gap: 9px !important;
+  padding: 0 13px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+}
+
+.attendance-back-btn {
+  width: 38px !important;
+  min-width: 38px !important;
+  padding: 0 !important;
+}
+
+.overview-grid,
+.approval-grid,
+.attendance-summary-grid,
+.roles-grid {
+  gap: 16px !important;
+  margin-bottom: 22px !important;
+}
+
+.metric-card,
+.approval-card,
+.attendance-summary-card,
+.role-card,
+.custom-role-card {
+  min-height: 128px !important;
+  padding: 19px 20px !important;
+  border-radius: 12px !important;
+}
+
+.metric-icon,
+.attendance-summary-icon,
+.role-icon {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 10px !important;
+}
+
+.metric-icon svg,
+.attendance-summary-icon svg,
+.role-icon svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.metric-card .chip,
+.chip,
+.status-pill,
+.active-pill {
+  font-size: 10px !important;
+  padding: 5px 10px !important;
+}
+
+.metric-card strong,
+.approval-card strong,
+.attendance-summary-card b {
+  font-size: 28px !important;
+  line-height: 1 !important;
+}
+
+.attendance-summary-card b span {
+  font-size: 28px !important;
+}
+
+.metric-card p,
+.approval-card p,
+.attendance-summary-top strong,
+.attendance-employee-copy p {
+  font-size: 11px !important;
+}
+
+.attendance-employee-copy {
+  margin-top: 16px !important;
+}
+
+.attendance-employee-copy h2,
+.role-card h2,
+.profile-card h2,
+.setting-row h2 {
+  font-size: 16px !important;
+}
+
+.role-card p,
+.profile-card p,
+.setting-row p,
+.department-name + p {
+  font-size: 12px !important;
+}
+
+.dashboard-lower {
+  gap: 18px !important;
+}
+
+.queue-card,
+.rate-card,
+.budget-card,
+.member-directory-card,
+.hr-search-card,
+.hr-table-card,
+.profile-card,
+.approval-empty-card,
+.attendance-settings-card,
+.attendance-history-card {
+  border-radius: 12px !important;
+}
+
+.queue-card,
+.member-directory-card,
+.profile-card,
+.attendance-settings-card {
+  padding: 22px !important;
+}
+
+.card-head h2,
+.rate-card h2,
+.budget-card h2 {
+  font-size: 16px !important;
+}
+
+.queue-table .table-row,
+.member-row,
+.hr-table-row,
+.attendance-table-row {
+  min-height: 58px !important;
+  padding: 0 22px !important;
+  column-gap: 14px !important;
+  font-size: 12px !important;
+}
+
+.queue-table .table-row.header,
+.member-row.header,
+.hr-table-row.header,
+.attendance-table-row.header {
+  min-height: 46px !important;
+  font-size: 10px !important;
+  letter-spacing: 1.2px !important;
+}
+
+.queue-table .table-row strong,
+.member-row strong,
+.hr-table-row strong,
+.attendance-table-row strong,
+.attendance-table-row b {
+  font-size: 12px !important;
+}
+
+.queue-table .table-row small,
+.member-row small,
+.hr-table-row small,
+.attendance-table-row span,
+.profile-fields label {
+  font-size: 10px !important;
+}
+
+.member-avatar,
+.employee-name > span,
+.profile-photo {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  font-size: 12px !important;
+}
+
+.member-search,
+.member-search.wide,
+.employee-search,
+.hr-search-card select,
+.profile-fields input,
+.profile-fields span {
+  min-height: 38px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+}
+
+.hr-search-card,
+.employee-filters {
+  gap: 12px !important;
+  padding: 16px !important;
+  margin-bottom: 18px !important;
+}
+
+.action-cell button,
+.employee-actions button {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  border-radius: 8px !important;
+}
+
+.pagination button,
+.delete-link,
+.edit-link,
+.save-profile,
+.settings-save-btn,
+.queue-link,
+.budget-card button {
+  min-height: 34px !important;
+  border-radius: 8px !important;
+  font-size: 11px !important;
+}
+
+.profile-photo-row {
+  gap: 16px !important;
+  margin: 18px 0 !important;
+}
+
+.profile-photo-row h3 {
+  font-size: 14px !important;
+}
+
+.profile-fields {
+  gap: 14px !important;
+}
+
+.setting-row {
+  min-height: 70px !important;
+  padding: 18px 0 !important;
+}
+
+.setting-toggle {
+  width: 44px !important;
+  height: 24px !important;
+}
+
+.setting-toggle::after {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.setting-number,
+.time-pill {
+  min-height: 36px !important;
+  padding: 0 13px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+}
+
+.approval-empty-card {
+  padding: 44px 22px !important;
+}
+
+.approval-check {
+  width: 72px !important;
+  height: 72px !important;
+}
+
+.approval-check svg {
+  width: 42px !important;
+  height: 42px !important;
+}
+
+.approval-empty-card h2 {
+  font-size: 20px !important;
+}
+
+.approval-empty-card p {
+  font-size: 12px !important;
+}
+
+/* Violet-blue theme override: replace the old green theme everywhere. */
+:root {
+  --green: #5b00ff;
+  --green-dark: #24006f;
+  --mint: #7a35ff;
+  --theme-primary: #5b00ff;
+  --theme-primary-2: #7a35ff;
+  --theme-dark: #24006f;
+  --theme-soft: #f1e9ff;
+  --theme-soft-strong: #e7d9ff;
+  --theme-border: #cbb8ff;
+}
+
+.brand-mark {
+  overflow: hidden !important;
+  background: #fff !important;
+}
+
+.brand-logo-image {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.brand-mark.compact .brand-logo-image {
+  width: 112px !important;
+  height: 44px !important;
+  transform: translateX(-34px) !important;
+}
+
+.employee-shell .employee-rail,
+.employee-shell.nav-expanded .employee-rail,
+.employee-shell .employee-rail::before,
+.employee-shell.nav-expanded .employee-rail::before,
+.dashboard-shell .sidebar,
+.dashboard-shell .sidebar::before,
+.dashboard-shell.nav-expanded .sidebar::before {
+  background: var(--theme-dark) !important;
+}
+
+.employee-shell .employee-rail-nav > button.active,
+.employee-shell.nav-expanded .employee-rail-nav > button.active,
+.dashboard-shell .side-nav .rail-item.active,
+.dashboard-shell.nav-expanded .side-nav .rail-item.active,
+.dashboard-shell.nav-expanded .side-nav .rail-item.active svg {
+  color: var(--theme-primary) !important;
+}
+
+.employee-shell .employee-rail-nav > button.active,
+.dashboard-shell .side-nav .rail-item.active {
+  background: var(--theme-soft) !important;
+}
+
+.employee-shell.nav-expanded .employee-rail-nav > button.active {
+  background: transparent !important;
+}
+
+.employee-panel-menu button,
+.dashboard-shell.nav-expanded .expanded-nav-list button.active,
+.dashboard-shell.nav-expanded .side-nav .rail-item.active span,
+.mint,
+.chip.mint,
+.status-pill,
+.active-pill {
+  color: var(--theme-primary) !important;
+  background: var(--theme-soft) !important;
+}
+
+.employee-panel-menu button svg,
+.dashboard-shell.nav-expanded .expanded-nav-list button.active svg,
+.dashboard-shell.nav-expanded .expanded-nav-list button.active span,
+.dashboard-shell.nav-expanded .side-nav .rail-item.active > span {
+  color: var(--theme-primary) !important;
+}
+
+.green-action,
+.clock-in,
+.edb-clock-in,
+.edb-export-button,
+.attendance-export-btn,
+.save-profile,
+.settings-save-btn,
+.queue-link,
+.budget-card button,
+.auth-form .primary-action,
+.primary-action {
+  border-color: var(--theme-primary) !important;
+  background: var(--theme-primary) !important;
+  color: #fff !important;
+}
+
+.goal-progress span,
+.edb-progress-bar span,
+.progress-track span {
+  background: var(--theme-primary) !important;
+}
+
+.goal-card p b,
+.edb-goal-label b,
+.stat-card .mint,
+.edb-stat-card > svg,
+.edb-stat-card small.green,
+.employee-attendance-card.green strong,
+.employee-attendance-card.green b,
+.employee-attendance-card.green p,
+.attendance-summary-card.green .attendance-summary-top strong,
+.attendance-summary-card.green b,
+.attendance-summary-card.green p,
+.approved,
+.edb-approved,
+.employee-attendance-row em,
+.attendance-table-row em,
+.setting-toggle.on,
+.role-cell strong,
+.edit-link {
+  color: var(--theme-primary) !important;
+}
+
+.setting-toggle.on,
+.employee-attendance-card.green .employee-attendance-icon,
+.attendance-summary-card.green .attendance-summary-icon,
+.quick-card.mint > svg,
+.edb-quick-card.leave .edb-quick-icon,
+.metric-icon.mint,
+.metric-icon.green,
+.role-badge,
+.approval-check,
+.toggle-cell span {
+  background: var(--theme-primary) !important;
+}
+
+.employee-attendance-card.green,
+.attendance-summary-card.green,
+.quick-card.mint,
+.edb-quick-card.leave {
+  border-color: var(--theme-border) !important;
+  background: linear-gradient(120deg, #f5efff 0%, #eadfff 100%) !important;
+}
+
+.edb-quick-card.leave .edb-total-pill,
+.quick-card.mint span,
+.quick-card.mint strong,
+.quick-card.mint button {
+  color: var(--theme-primary) !important;
+}
+
+.approved,
+.edb-approved,
+.employee-attendance-row em,
+.attendance-table-row em {
+  border-color: var(--theme-border) !important;
+  background: var(--theme-soft) !important;
+}
+
+.profile-photo,
+.member-avatar,
+.employee-name > span,
+.department-name span {
+  background: var(--theme-soft-strong) !important;
+  color: var(--theme-primary) !important;
+}
+
+.auth-brand-panel {
+  background:
+    linear-gradient(140deg, rgba(12, 0, 48, 0.16), rgba(12, 0, 48, 0.04)),
+    linear-gradient(137deg, #24006f 0%, #5b00ff 48%, #6f1cff 100%) !important;
+}
+
+/* Professional blue theme pass: remove the old green sidebar accents. */
+:root {
+  --green: #2563eb;
+  --green-dark: #081a38;
+  --mint: #0891b2;
+  --violet: #2563eb;
+  --violet-2: #0891b2;
+  --blue: #2563eb;
+  --theme-primary: #2563eb;
+  --theme-primary-2: #0891b2;
+  --theme-dark: #081a38;
+  --theme-dark-2: #0b2a5b;
+  --theme-soft: #eaf2ff;
+  --theme-soft-strong: #dbeafe;
+  --theme-border: #b8d2ff;
+  --theme-cyan-soft: #e8fbff;
+}
+
+.employee-shell .employee-rail,
+.employee-shell.nav-expanded .employee-rail::before,
+.employee-shell .employee-rail::before,
+.dashboard-shell .sidebar,
+.dashboard-shell .sidebar::before,
+.dashboard-shell.nav-expanded .sidebar::before {
+  background:
+    linear-gradient(180deg, var(--theme-dark) 0%, #102e63 56%, #071429 100%) !important;
+}
+
+.employee-shell.nav-expanded .employee-rail {
+  background: #fff !important;
+}
+
+.employee-shell .employee-rail-nav > button.active,
+.employee-shell.nav-expanded .employee-rail-nav > button.active,
+.dashboard-shell .side-nav .rail-item.active,
+.dashboard-shell.nav-expanded .side-nav .rail-item.active {
+  color: var(--theme-primary) !important;
+  background: var(--theme-soft) !important;
+}
+
+.employee-shell.nav-expanded .employee-rail-nav > button.active {
+  background: transparent !important;
+}
+
+.employee-panel-menu button,
+.employee-shell.nav-expanded .employee-rail-section button,
+.dashboard-shell.nav-expanded .expanded-nav-list button.active,
+.dashboard-shell.nav-expanded .side-nav .rail-item.active span,
+.mint,
+.chip.mint,
+.active-pill {
+  color: var(--theme-primary) !important;
+  background: var(--theme-soft) !important;
+}
+
+.employee-panel-menu button svg,
+.employee-shell.nav-expanded .employee-rail-section button svg,
+.employee-shell.nav-expanded .employee-rail-section button span,
+.dashboard-shell.nav-expanded .expanded-nav-list button.active svg,
+.dashboard-shell.nav-expanded .expanded-nav-list button.active span,
+.dashboard-shell.nav-expanded .side-nav .rail-item.active > span {
+  color: var(--theme-primary) !important;
+}
+
+.green-action,
+.clock-in,
+.edb-clock-in,
+.edb-export-button,
+.attendance-export-btn,
+.save-profile,
+.settings-save-btn,
+.queue-link,
+.budget-card button,
+.auth-form .primary-action,
+.primary-action {
+  border-color: var(--theme-primary) !important;
+  background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-primary-2) 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.22) !important;
+}
+
+.auth-tabs .active,
+.role-switch .selected {
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-primary-2)) !important;
+  color: #fff !important;
+}
+
+.goal-progress span,
+.edb-progress-bar span,
+.progress-track span {
+  background: linear-gradient(90deg, var(--theme-primary), var(--theme-primary-2)) !important;
+}
+
+.goal-card p b,
+.edb-goal-label b,
+.stat-card .mint,
+.edb-stat-card > svg,
+.edb-stat-card small.green,
+.employee-attendance-card.green strong,
+.employee-attendance-card.green b,
+.employee-attendance-card.green p,
+.attendance-summary-card.green .attendance-summary-top strong,
+.attendance-summary-card.green b,
+.attendance-summary-card.green p,
+.approved,
+.edb-approved,
+.employee-attendance-row em,
+.attendance-table-row em,
+.setting-toggle.on,
+.role-cell strong,
+.edit-link {
+  color: var(--theme-primary) !important;
+}
+
+.setting-toggle.on,
+.employee-attendance-card.green .employee-attendance-icon,
+.attendance-summary-card.green .attendance-summary-icon,
+.quick-card.mint > svg,
+.edb-quick-card.leave .edb-quick-icon,
+.metric-icon.mint,
+.metric-icon.green,
+.role-badge,
+.approval-check,
+.toggle-cell span {
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-primary-2)) !important;
+}
+
+.employee-attendance-card.green,
+.attendance-summary-card.green,
+.quick-card.mint,
+.edb-quick-card.leave {
+  border-color: var(--theme-border) !important;
+  background: linear-gradient(120deg, #f3f7ff 0%, #e8fbff 100%) !important;
+}
+
+.edb-quick-card.leave .edb-total-pill,
+.quick-card.mint span,
+.quick-card.mint strong,
+.quick-card.mint button,
+.status-pill {
+  color: var(--theme-primary) !important;
+}
+
+.status-pill {
+  background: var(--theme-soft) !important;
+  box-shadow: none !important;
+}
+
+.approved,
+.edb-approved,
+.employee-attendance-row em,
+.attendance-table-row em {
+  border-color: var(--theme-border) !important;
+  background: var(--theme-soft) !important;
+}
+
+.profile-photo,
+.member-avatar,
+.employee-name > span,
+.department-name span {
+  background: var(--theme-soft-strong) !important;
+  color: var(--theme-primary) !important;
+}
+
+.auth-brand-panel {
+  background:
+    linear-gradient(140deg, rgba(8, 26, 56, 0.22), rgba(8, 26, 56, 0.06)),
+    radial-gradient(circle at 24% 18%, rgba(8, 145, 178, 0.24), transparent 30%),
+    linear-gradient(137deg, #081a38 0%, #1d4ed8 52%, #0891b2 100%) !important;
+}
+
+.employee-rail-logo-wrap {
+  width: 48px !important;
+  height: 48px !important;
+  left: 8px !important;
+  border: 1px solid rgba(184, 210, 255, 0.8) !important;
+  border-radius: 12px !important;
+  background: #f8fbff !important;
+  box-shadow: 0 10px 20px rgba(8, 26, 56, 0.22) !important;
+}
+
+.employee-rail-logo-wrap img {
+  display: none !important;
+}
+
+.employee-rail-logo-wrap::after {
+  content: 'FKH' !important;
+  display: grid !important;
+  width: 34px !important;
+  height: 34px !important;
+  place-items: center !important;
+  border-radius: 10px !important;
+  color: #0b2a5b !important;
+  background: linear-gradient(135deg, #ffffff 0%, #eaf2ff 100%) !important;
+  font-size: 12px !important;
+  font-weight: 850 !important;
+  letter-spacing: 0 !important;
+}
+
+.employee-panel-brand {
+  border-bottom-color: #e1e9f6 !important;
+}
+
+.employee-panel-logo {
+  width: 144px !important;
+  height: 58px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.brand-mark.compact {
+  border-color: rgba(37, 99, 235, 0.2) !important;
+  background: #f8fbff !important;
+}
+
+.brand-mark.compact .brand-logo-image {
+  width: 128px !important;
+  height: 50px !important;
+  transform: translateX(-38px) !important;
+}
+
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button.active,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button {
+  color: var(--theme-primary) !important;
+  background: var(--theme-soft) !important;
+}
+
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button.active svg,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button.active span,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button svg,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button span {
+  color: var(--theme-primary) !important;
+}
+
+/* Sidebar alignment polish: keep the dark rail inside its lane and make the main logo circular. */
+#root .employee-shell.nav-expanded .employee-rail::before,
+#root .employee-shell .employee-rail::before {
+  inset: 0 auto 0 0 !important;
+  width: 64px !important;
+  min-width: 64px !important;
+}
+
+#root .employee-shell.nav-expanded .employee-menu-panel {
+  position: absolute !important;
+  inset: 0 0 0 64px !important;
+  top: 0 !important;
+  left: 64px !important;
+  width: 166px !important;
+  z-index: 2 !important;
+  background: #fff !important;
+}
+
+#root .employee-shell.nav-expanded .employee-rail-logo-wrap {
+  z-index: 5 !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-brand {
+  position: relative !important;
+  height: 176px !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 14px 12px !important;
+  border-bottom: 1px solid #e1e9f6 !important;
+  background: #fff !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-brand::before {
+  content: '' !important;
+  position: absolute !important;
+  width: 132px !important;
+  height: 132px !important;
+  border: 1px solid rgba(37, 99, 235, 0.2) !important;
+  border-radius: 50% !important;
+  background:
+    url('./assets/logo.png') center / 158% auto no-repeat,
+    radial-gradient(circle at 50% 44%, #fff 0 56%, #edf6ff 100%) !important;
+  box-shadow: 0 14px 28px rgba(8, 26, 56, 0.1) !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-logo {
+  position: relative !important;
+  z-index: 1 !important;
+  width: 108px !important;
+  height: 108px !important;
+  border-radius: 50% !important;
+  opacity: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-menu {
+  padding-top: 20px !important;
+}
+
+/* Production sidebar state split: expanded rail never bleeds into the menu panel. */
+#root .employee-shell .employee-rail {
+  overflow: hidden !important;
+}
+
+#root .employee-shell.nav-expanded .employee-rail::before {
+  width: 64px !important;
+  min-width: 64px !important;
+}
+
+#root .employee-shell.nav-expanded .employee-rail-nav,
+#root .employee-shell.nav-expanded .employee-rail-nav > button {
+  width: 64px !important;
+  max-width: 64px !important;
+  min-width: 64px !important;
+}
+
+#root .employee-shell.nav-expanded .employee-rail-nav > button.active,
+#root .employee-shell.nav-expanded .employee-rail-nav > button.active:hover {
+  color: #60a5fa !important;
+  background: transparent !important;
+  border-right: 0 !important;
+  box-shadow: none !important;
+}
+
+#root .employee-shell.nav-expanded .employee-rail-nav > button.active svg {
+  color: #60a5fa !important;
+  stroke: currentColor !important;
+}
+
+/* Collapsed sidebar active state: keep the highlight fully inside the rail. */
+#root .employee-shell:not(.nav-expanded) .employee-rail::before {
+  width: 72px !important;
+  min-width: 72px !important;
+}
+
+#root .employee-shell:not(.nav-expanded) .employee-rail-nav,
+#root .employee-shell:not(.nav-expanded) .employee-rail-nav > button {
+  width: 72px !important;
+  max-width: 72px !important;
+  min-width: 72px !important;
+}
+
+#root .employee-shell:not(.nav-expanded) .employee-rail-nav > button.active,
+#root .employee-shell:not(.nav-expanded) .employee-rail-nav > button.active:hover {
+  box-sizing: border-box !important;
+  color: #60a5fa !important;
+  background: rgba(37, 99, 235, 0.16) !important;
+  border-right: 0 !important;
+  box-shadow: inset 3px 0 0 #38bdf8 !important;
+}
+
+#root .employee-shell:not(.nav-expanded) .employee-rail-nav > button.active svg {
+  color: #60a5fa !important;
+  stroke: currentColor !important;
+}
+
+/* Production safety net: no employee sidebar state may fall back to the old green theme. */
+#root {
+  --green: #2563eb;
+  --green-dark: #081a38;
+  --mint: #0891b2;
+  --theme-primary: #2563eb;
+  --theme-primary-2: #0891b2;
+  --theme-dark: #081a38;
+  --theme-soft: #eaf2ff;
+  --theme-border: #b8d2ff;
+}
+
+#root .employee-shell .employee-rail,
+#root .employee-shell .employee-rail::before,
+#root .employee-shell.nav-expanded .employee-rail::before {
+  background:
+    linear-gradient(180deg, #081a38 0%, #102e63 56%, #071429 100%) !important;
+}
+
+#root .employee-shell.nav-expanded .employee-rail {
+  background: #fff !important;
+}
+
+#root .employee-shell .employee-rail-nav > button.active,
+#root .employee-shell .employee-rail-nav > button.active:hover,
+#root .employee-shell .employee-rail-nav > button.active:focus-visible {
+  color: #60a5fa !important;
+  background: rgba(37, 99, 235, 0.16) !important;
+  border: 0 !important;
+  box-shadow: inset 3px 0 0 #38bdf8 !important;
+}
+
+#root .employee-shell .employee-rail-nav > button.active svg {
+  color: #60a5fa !important;
+  stroke: currentColor !important;
+}
+
+#root .employee-shell.nav-expanded .employee-rail-nav > button.active,
+#root .employee-shell.nav-expanded .employee-rail-nav > button.active:hover,
+#root .employee-shell.nav-expanded .employee-rail-nav > button.active:focus-visible {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+#root .employee-panel-menu button,
+#root .employee-panel-menu button.active,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button.active {
+  color: var(--theme-primary) !important;
+  background: var(--theme-soft) !important;
+  border: 0 !important;
+}
+
+#root .employee-panel-menu button svg,
+#root .employee-panel-menu button span {
+  color: var(--theme-primary) !important;
+}
+
+#root .green-action,
+#root .clock-in,
+#root .edb-clock-in,
+#root .edb-export-button,
+#root .attendance-export-btn,
+#root .save-profile,
+#root .settings-save-btn,
+#root .queue-link,
+#root .budget-card button,
+#root .auth-form .primary-action,
+#root .primary-action {
+  border-color: var(--theme-primary) !important;
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-primary-2)) !important;
+  color: #fff !important;
+}
+
+#root .goal-progress span,
+#root .edb-progress-bar span,
+#root .progress-track span {
+  background: linear-gradient(90deg, var(--theme-primary), var(--theme-primary-2)) !important;
+}
+
+#root .mint,
+#root .chip.mint,
+#root .status-pill,
+#root .active-pill,
+#root .approved,
+#root .edb-approved,
+#root .employee-attendance-row em,
+#root .attendance-table-row em {
+  color: var(--theme-primary) !important;
+  background: var(--theme-soft) !important;
+  border-color: var(--theme-border) !important;
+}
+
+#root .employee-attendance-card.green,
+#root .attendance-summary-card.green,
+#root .quick-card.mint,
+#root .edb-quick-card.leave {
+  border-color: var(--theme-border) !important;
+  background: linear-gradient(120deg, #f3f7ff 0%, #e8fbff 100%) !important;
+}
+
+#root .employee-attendance-card.green .employee-attendance-icon,
+#root .attendance-summary-card.green .attendance-summary-icon,
+#root .quick-card.mint > svg,
+#root .edb-quick-card.leave .edb-quick-icon,
+#root .metric-icon.mint,
+#root .metric-icon.green {
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-primary-2)) !important;
+}
+
+#root .employee-attendance-card.green strong,
+#root .employee-attendance-card.green b,
+#root .employee-attendance-card.green p,
+#root .attendance-summary-card.green .attendance-summary-top strong,
+#root .attendance-summary-card.green b,
+#root .attendance-summary-card.green p,
+#root .goal-card p b,
+#root .edb-goal-label b,
+#root .edb-stat-card small.green,
+#root .quick-card.mint span,
+#root .quick-card.mint strong,
+#root .quick-card.mint button {
+  color: var(--theme-primary) !important;
+}
+
+#root .employee-rail-logo-wrap {
+  background:
+    url('./assets/logo.png') center / 235% auto no-repeat,
+    #f8fbff !important;
+}
+
+#root .employee-rail-logo-wrap img {
+  display: block !important;
+  width: 120px !important;
+  height: 52px !important;
+  max-width: none !important;
+  opacity: 0 !important;
+}
+
+#root .employee-rail-logo-wrap::after {
+  content: none !important;
+}
+
+.auth-error,
+.page-error {
+  margin: 0 !important;
+  color: #e11d48 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+.page-success {
+  margin: 0 !important;
+  color: #2563eb !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+.setting-toggle-button {
+  display: grid !important;
+  width: auto !important;
+  min-width: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.setting-number input,
+.time-pill input,
+.time-pill select {
+  width: 106px !important;
+  min-width: 0 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  font: inherit !important;
+  font-weight: 800 !important;
+}
+
+.approval-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.approval-actions button {
+  border: 1px solid #c8d7ee;
+  border-radius: 8px;
+  background: #eef5ff;
+  color: #0b4f9c;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.approval-actions button:last-child {
+  border-color: #ffd5d5;
+  background: #fff1f1;
+  color: #b42318;
+}
+
+.admin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(3, 17, 38, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+.admin-modal {
+  width: min(920px, 100%);
+  max-height: min(860px, calc(100vh - 48px));
+  overflow: auto;
+  border: 1px solid #d9e5f6;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 24px 80px rgba(8, 26, 56, 0.22);
+  padding: 24px;
+}
+
+.admin-modal.compact {
+  width: min(620px, 100%);
+}
+
+.admin-modal header,
+.admin-modal footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-modal header {
+  margin-bottom: 22px;
+}
+
+.admin-modal header h2 {
+  margin: 0;
+  color: #061a3a;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.admin-modal header p {
+  margin: 6px 0 0;
+  color: #61708d;
+  font-size: 14px;
+}
+
+.admin-modal header > button,
+.admin-modal footer > button:first-child {
+  border: 1px solid #cfdbec;
+  border-radius: 8px;
+  background: #f7faff;
+  color: #18365f;
+  font-weight: 800;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.admin-modal footer {
+  margin-top: 22px;
+  border-top: 1px solid #e6edf7;
+  padding-top: 18px;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-form-grid.single {
+  grid-template-columns: 1fr;
+}
+
+.admin-form-grid label {
+  display: grid;
+  gap: 8px;
+  color: #061a3a;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.admin-form-grid label small {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.admin-form-grid input,
+.admin-form-grid select,
+.admin-form-grid textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #cfdbec;
+  border-radius: 8px;
+  background: #f8fbff;
+  color: #061a3a;
+  font: inherit;
+  font-weight: 700;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.admin-form-grid textarea {
+  min-height: 104px;
+  resize: vertical;
+}
+
+.admin-form-wide {
+  grid-column: 1 / -1;
+}
+
+.employee-actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.toggle-cell {
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: #dbeafe;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.toggle-cell span {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #0891b2);
+  transform: translateX(20px);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.toggle-cell span.off {
+  background: #94a3b8;
+  transform: translateX(0);
+}
+
+@media (max-width: 760px) {
+  .admin-modal-backdrop {
+    padding: 12px;
+  }
+
+  .admin-modal {
+    padding: 18px;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.account-menu-wrap {
+  position: relative;
+}
+
+.account-menu-wrap .avatar {
+  border: 0;
+  cursor: pointer;
+}
+
+.account-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 90;
+  width: 240px;
+  border: 1px solid #d9e5f6;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 18px 48px rgba(8, 26, 56, 0.18);
+  padding: 14px;
+}
+
+.account-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  right: 22px;
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid #d9e5f6;
+  border-left: 1px solid #d9e5f6;
+  background: #ffffff;
+  transform: rotate(45deg);
+}
+
+.account-dropdown strong,
+.account-dropdown span {
+  display: block;
+}
+
+.account-dropdown strong {
+  color: #061a3a;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.account-dropdown span {
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.account-dropdown button {
+  width: 100%;
+  margin-top: 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 900;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.account-dropdown .profile-menu-button {
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.account-dropdown .logout-menu-button {
+  margin-top: 8px;
+  border: 1px solid #fecaca;
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.dashboard-shell .logout-button.sidebar-toggle,
+.dashboard-shell.nav-expanded .logout-button.sidebar-toggle {
+  display: grid !important;
+  place-items: center !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+}
+
+.dashboard-shell.nav-expanded .logout-button.sidebar-toggle {
+  left: 32px !important;
+}
+
+.dashboard-shell .logout-button.sidebar-toggle svg {
+  transition: transform 0.18s ease;
+}
+
+.dashboard-shell .logout-button.sidebar-toggle.open svg {
+  transform: rotate(180deg);
+}
+
+.edb-offline.online {
+  border-color: #bfdbfe !important;
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+}
+
+.edb-break.active {
+  border-color: #bfdbfe !important;
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+}
+
+.edb-clock-in:disabled,
+.edb-break:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+
+.edb-work-mode-select {
+  width: 100%;
+  max-width: 190px;
+  min-height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #031b3f;
+  font-size: 14px;
+  font-weight: 900;
+  outline: none;
+  cursor: pointer;
+}
+
+.edb-work-mode-select:disabled {
+  color: #031b3f;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+/* Login brand panel: real logo and production blue theme. */
+#root .auth-brand-panel {
+  background:
+    linear-gradient(145deg, rgba(8, 26, 56, 0.96) 0%, rgba(15, 55, 116, 0.96) 54%, rgba(8, 145, 178, 0.94) 100%),
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.16), transparent 28%) !important;
+}
+
+#root .auth-brand-panel::after {
+  background: rgba(255, 255, 255, 0.07) !important;
+}
+
+#root .auth-brand-panel .brand-mark {
+  display: grid !important;
+  width: 230px !important;
+  height: 138px !important;
+  border: 1px solid rgba(219, 234, 254, 0.85) !important;
+  border-radius: 18px !important;
+  background:
+    url('./assets/logo.png') center 53% / 126% auto no-repeat,
+    #ffffff !important;
+  box-shadow: 0 18px 48px rgba(3, 17, 38, 0.22) !important;
+  overflow: hidden !important;
+}
+
+#root .auth-brand-panel .brand-mark::before {
+  content: none !important;
+  display: none !important;
+}
+
+#root .auth-brand-panel .brand-logo-image {
+  display: none !important;
+}
+
+#root .auth-brand-panel .feature-list li::before {
+  background: rgba(191, 219, 254, 0.18) !important;
+  border: 1px solid rgba(219, 234, 254, 0.22) !important;
+}
+
+#root .auth-brand-panel .feature-list li::after {
+  border-color: #dbeafe !important;
+}
+
+#root .auth-brand-panel h1,
+#root .auth-brand-panel .auth-tagline,
+#root .auth-brand-panel .feature-list,
+#root .auth-brand-panel .copyright {
+  color: #ffffff !important;
+}
+
+/* Product polish: local fonts, soft motion, and real loading states. */
+:root {
+  --font-ui: "Nunito", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Kalam", "Nunito", cursive;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-ui) !important;
+}
+
+#root h1,
+#root h2,
+#root .auth-copy h2,
+#root .admin-page-head h1,
+#root .section-heading h2,
+#root .edb-welcome-row h2,
+#root .edb-card-title h3,
+#root .edb-shift-heading h3,
+#root .edb-log-head h2 {
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+}
+
+#root .auth-brand-panel h1,
+#root .sidebar-brand strong,
+#root .employee-panel-brand,
+#root .metric-card strong,
+#root .approval-card strong,
+#root .edb-goal-meter strong,
+#root .edb-active-timer strong {
+  font-family: var(--font-ui) !important;
+}
+
+.page-loader {
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 16px;
+  color: #35557e;
+  animation: pageFadeIn 0.32s ease both;
+}
+
+.loader-ring {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #dbeafe;
+  border-top-color: #2563eb;
+  border-right-color: #0891b2;
+  border-radius: 999px;
+  animation: loaderSpin 0.78s linear infinite;
+}
+
+.page-loader strong {
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.dashboard-content,
+.admin-account-page,
+.employee-content,
+.employee-attendance-page,
+.auth-card {
+  animation: pageFadeIn 0.36s ease both;
+}
+
+.metric-card,
+.approval-card,
+.queue-card,
+.hr-table-card,
+.profile-card,
+.attendance-settings-card,
+.attendance-history-card,
+.edb-goal-card,
+.edb-shift-card,
+.edb-quick-card,
+.edb-stat-card,
+.employee-attendance-card,
+.employee-attendance-table,
+.auth-card {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.metric-card:hover,
+.approval-card:hover,
+.edb-quick-card:hover,
+.edb-stat-card:hover,
+.employee-attendance-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(8, 26, 56, 0.12) !important;
+}
+
+button,
+.green-action,
+.primary-action,
+.settings-save-btn,
+.edb-clock-in,
+.edb-break,
+.action-cell button,
+.icon-button,
+.notification {
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+button:not(:disabled):hover,
+.green-action:not(:disabled):hover,
+.primary-action:not(:disabled):hover,
+.settings-save-btn:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+button:not(:disabled):active,
+.green-action:not(:disabled):active,
+.primary-action:not(:disabled):active,
+.settings-save-btn:not(:disabled):active {
+  transform: translateY(0) scale(0.99);
+}
+
+.primary-action:disabled,
+.green-action:disabled,
+.settings-save-btn:disabled {
+  position: relative;
+  opacity: 0.82;
+  cursor: wait;
+}
+
+.primary-action:disabled::after,
+.green-action:disabled::after,
+.settings-save-btn:disabled::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.42);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: loaderSpin 0.75s linear infinite;
+}
+
+.input-shell,
+.member-search,
+.admin-form-grid input,
+.admin-form-grid select,
+.admin-form-grid textarea,
+.profile-fields input,
+.time-pill,
+.setting-number {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.input-shell:focus-within,
+.member-search:focus-within,
+.admin-form-grid input:focus,
+.admin-form-grid select:focus,
+.admin-form-grid textarea:focus,
+.profile-fields input:focus,
+.time-pill:focus-within,
+.setting-number:focus-within {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12) !important;
+  background: #ffffff !important;
+}
+
+.hr-table-row,
+.member-row,
+.attendance-table-row,
+.employee-attendance-row {
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.hr-table-row:not(.header):hover,
+.member-row:not(.header):hover,
+.attendance-table-row:not(.header):hover,
+.employee-attendance-row:not(.header):hover {
+  background: #f8fbff;
+}
+
+@keyframes loaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Final admin navigation and settings hardening. Keep active states blue and prevent text/control collisions. */
+#root .dashboard-shell .side-nav button.active,
+#root .dashboard-shell .side-nav button.active:hover,
+#root .dashboard-shell .side-nav .rail-item.active,
+#root .dashboard-shell .side-nav .rail-item.active:hover {
+  color: #60a5fa !important;
+  background: rgba(37, 99, 235, 0.16) !important;
+  border: 0 !important;
+  box-shadow: inset 3px 0 0 #38bdf8 !important;
+}
+
+#root .dashboard-shell .side-nav button.active svg,
+#root .dashboard-shell .side-nav .rail-item.active svg {
+  color: #60a5fa !important;
+  stroke: currentColor !important;
+}
+
+#root .dashboard-shell.nav-expanded .side-nav .rail-item.active,
+#root .dashboard-shell.nav-expanded .side-nav .rail-item.active:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#root .dashboard-shell.nav-expanded .expanded-nav-list button.active,
+#root .dashboard-shell.nav-expanded .expanded-nav-list button.active:hover {
+  color: #2563eb !important;
+  background: #eaf2ff !important;
+  box-shadow: none !important;
+}
+
+#root .dashboard-shell.nav-expanded .expanded-nav-list button.active svg,
+#root .dashboard-shell.nav-expanded .expanded-nav-list button.active span {
+  color: #2563eb !important;
+  stroke: currentColor !important;
+}
+
+#root .dashboard-shell.nav-expanded .side-nav .rail-item.active svg {
+  color: #60a5fa !important;
+  stroke: currentColor !important;
+}
+
+#root .employee-shell.nav-expanded .employee-rail-nav > button.active > span {
+  color: #2563eb !important;
+  background: #eaf2ff !important;
+}
+
+#root .employee-panel-menu button,
+#root .employee-panel-menu button.active {
+  color: #2563eb !important;
+  background: #eaf2ff !important;
+}
+
+#root .setting-toggle.on {
+  background: linear-gradient(135deg, #2563eb, #0891b2) !important;
+}
+
+#root .attendance-settings-card {
+  overflow: visible !important;
+}
+
+#root .setting-row {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) max-content !important;
+  align-items: center !important;
+  gap: 20px 36px !important;
+  min-width: 0 !important;
+  min-height: 92px !important;
+  padding: 20px 32px !important;
+  overflow: visible !important;
+}
+
+#root .setting-row > div:first-child {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+#root .setting-row h2 {
+  max-width: 100% !important;
+  margin: 0 0 8px !important;
+  overflow-wrap: anywhere !important;
+  color: #07142a !important;
+  font-family: var(--font-ui) !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  line-height: 1.25 !important;
+  white-space: normal !important;
+}
+
+#root .setting-row p {
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+}
+
+#root .setting-toggle-button,
+#root .setting-number,
+#root .time-pill {
+  justify-self: end !important;
+  max-width: 100% !important;
+}
+
+#root .setting-number {
+  display: grid !important;
+  grid-template-columns: minmax(86px, 104px) auto !important;
+  align-items: center !important;
+}
+
+#root .setting-number input {
+  width: 100% !important;
+  min-height: 44px !important;
+  padding: 0 14px !important;
+  border: 1px solid #d6e0ec !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  text-align: center !important;
+}
+
+#root .setting-time-grid {
+  grid-template-columns: repeat(auto-fit, minmax(390px, 1fr)) !important;
+  gap: 28px 40px !important;
+}
+
+#root .setting-row.compact {
+  grid-template-columns: minmax(0, 1fr) max-content !important;
+  min-height: 94px !important;
+}
+
+#root .time-pill {
+  width: 244px !important;
+  min-width: 0 !important;
+  padding: 0 14px !important;
+}
+
+#root .time-pill select {
+  width: 100% !important;
+}
+
+@media (max-width: 1180px) {
+  #root .setting-time-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 760px) {
+  #root .setting-row,
+  #root .setting-row.compact {
+    grid-template-columns: 1fr !important;
+    padding: 18px !important;
+  }
+
+  #root .setting-toggle-button,
+  #root .setting-number,
+  #root .time-pill {
+    justify-self: stretch !important;
+    width: 100% !important;
+  }
+}
+
+/* Keep dashboard metric icons crisp without washing out pastel tiles. */
+#root .metric-icon {
+  display: grid !important;
+  place-items: center !important;
+}
+
+#root .metric-icon svg {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+#root .metric-icon.blue svg,
+#root .metric-icon.mint svg,
+#root .metric-icon.green svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  filter: drop-shadow(0 2px 4px rgba(3, 17, 38, 0.18)) !important;
+}
+
+#root .metric-icon.violet svg {
+  color: #2563eb !important;
+  stroke: #2563eb !important;
+}
+
+#root .metric-icon.amber svg {
+  color: #e67900 !important;
+  stroke: #e67900 !important;
+}
+
+#root .metric-icon.rose svg {
+  color: #e92d63 !important;
+  stroke: #e92d63 !important;
+}
