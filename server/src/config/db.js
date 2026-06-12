@@ -5,12 +5,16 @@ import { env } from './env.js'
 export async function connectDb() {
   mongoose.set('strictQuery', true)
 
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection
+  }
+
   if (env.mongoUri?.startsWith('mongodb+srv://')) {
     dns.setServers(['1.1.1.1', '8.8.8.8'])
   }
 
   try {
-    await mongoose.connect(env.mongoUri, {
+    return await mongoose.connect(env.mongoUri, {
       serverSelectionTimeoutMS: 15000,
     })
   } catch (error) {
