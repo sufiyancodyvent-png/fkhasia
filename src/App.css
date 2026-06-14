@@ -5858,6 +5858,143 @@ button {
   }
 }
 
+.edb-notes-button {
+  display: inline-flex !important;
+  height: 34px !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 0 13px !important;
+  border: 1px solid #cfe0f6 !important;
+  border-radius: 7px !important;
+  color: #123a71 !important;
+  background: #f5f9ff !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.edb-note-status {
+  margin: 6px 0 0 !important;
+  color: #2371dd !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+.edb-note-modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 80 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 24px !important;
+  background: rgba(5, 18, 38, 0.48) !important;
+}
+
+.edb-note-modal {
+  width: min(560px, 100%) !important;
+  padding: 22px !important;
+  border: 1px solid #dbe5f2 !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  box-shadow: 0 24px 70px rgba(3, 17, 38, 0.22) !important;
+}
+
+.edb-note-modal-head,
+.edb-note-modal-foot {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+}
+
+.edb-note-modal-head span {
+  color: #8ba0bd !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.18em !important;
+}
+
+.edb-note-modal-head h2 {
+  margin: 4px 0 0 !important;
+  color: #07142a !important;
+  font-size: 30px !important;
+}
+
+.edb-note-modal-head > button {
+  width: 38px !important;
+  height: 38px !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  color: #48617f !important;
+  background: #eef4fb !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+}
+
+.edb-note-modal textarea {
+  display: block !important;
+  width: 100% !important;
+  min-height: 180px !important;
+  margin: 20px 0 16px !important;
+  padding: 14px !important;
+  resize: vertical !important;
+  border: 1px solid #d8e3f2 !important;
+  border-radius: 8px !important;
+  color: #10233c !important;
+  background: #f8fbff !important;
+  font-size: 15px !important;
+  font-weight: 750 !important;
+  line-height: 1.5 !important;
+  outline: none !important;
+}
+
+.edb-note-modal textarea:focus {
+  border-color: #2f6fed !important;
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.14) !important;
+}
+
+.edb-note-modal-foot span {
+  color: #667a98 !important;
+  font-size: 13px !important;
+  font-weight: 850 !important;
+}
+
+.edb-note-modal-foot div {
+  display: flex !important;
+  gap: 10px !important;
+}
+
+.edb-note-cancel,
+.edb-note-save {
+  height: 40px !important;
+  padding: 0 16px !important;
+  border-radius: 7px !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+}
+
+.edb-note-cancel {
+  border: 1px solid #d8e3f2 !important;
+  color: #304966 !important;
+  background: #fff !important;
+}
+
+.edb-note-save {
+  border: 0 !important;
+  color: #fff !important;
+  background: linear-gradient(135deg, #2f6fed, #1398bd) !important;
+}
+
+.edb-note-save:disabled {
+  color: #7f90a8 !important;
+  background: #e9eef6 !important;
+}
+
+.edb-export-button {
+  min-width: 128px !important;
+  border-color: #2f6fed !important;
+  background: linear-gradient(135deg, #2f6fed, #1398bd) !important;
+}
+
 /* ABSOLUTE FINAL EMPLOYEE FIX - keep this as the last block. */
 .employee-shell {
   display: grid !important;

@@ -4,6 +4,8 @@ import { User } from '../models/User.js'
 import { asyncHandler } from '../utils/asyncHandler.js'
 
 const router = express.Router()
+const VALID_ROLES = ['admin', 'manager', 'employee']
+const VALID_STATUSES = ['active', 'inactive']
 
 function publicUser(user) {
   return {
@@ -25,10 +27,22 @@ router.get('/', requireAuth, requireRole('admin', 'manager'), asyncHandler(async
 }))
 
 router.post('/', requireAuth, requireRole('admin'), asyncHandler(async (req, res) => {
-  const { name, email, password, role = 'employee', profile = {} } = req.body
+  const { name, email, password, role = 'employee', status = 'active', profile = {} } = req.body
 
   if (!name || !email || !password) {
     return res.status(400).json({ message: 'Name, email and password are required' })
+  }
+
+  if (String(password).length < 8) {
+    return res.status(400).json({ message: 'Password must be at least 8 characters' })
+  }
+
+  if (!VALID_ROLES.includes(role)) {
+    return res.status(400).json({ message: 'Role must be admin, manager, or employee' })
+  }
+
+  if (!VALID_STATUSES.includes(status)) {
+    return res.status(400).json({ message: 'Status must be active or inactive' })
   }
 
   const exists = await User.exists({ email: String(email).toLowerCase().trim() })
@@ -41,6 +55,7 @@ router.post('/', requireAuth, requireRole('admin'), asyncHandler(async (req, res
     name,
     email,
     role,
+    status,
     profile,
     passwordHash: await User.hashPassword(password),
   })
@@ -56,9 +71,7 @@ router.put('/:id', requireAuth, requireRole('admin'), asyncHandler(async (req, r
     return res.status(404).json({ message: 'User not found' })
   }
 
-  if (target.role === 'admin' && target._id.toString() !== req.user._id.toString()) {
-    return res.status(403).json({ message: 'Admin account cannot be edited from this page' })
-  }
+  const editingSelf = target._id.toString() === req.user._id.toString()
 
   if (email && email.toLowerCase().trim() !== target.email) {
     const exists = await User.exists({ email: email.toLowerCase().trim(), _id: { $ne: target._id } })
@@ -69,8 +82,28 @@ router.put('/:id', requireAuth, requireRole('admin'), asyncHandler(async (req, r
   }
 
   if (name) target.name = name
-  if (role && ['admin', 'manager', 'employee'].includes(role)) target.role = role
-  if (status && ['active', 'inactive'].includes(status)) target.status = status
+  if (role) {
+    if (!VALID_ROLES.includes(role)) {
+      return res.status(400).json({ message: 'Role must be admin, manager, or employee' })
+    }
+
+    if (editingSelf && role !== 'admin') {
+      return res.status(400).json({ message: 'You cannot remove admin access from your own account' })
+    }
+
+    target.role = role
+  }
+  if (status) {
+    if (!VALID_STATUSES.includes(status)) {
+      return res.status(400).json({ message: 'Status must be active or inactive' })
+    }
+
+    if (editingSelf && status === 'inactive') {
+      return res.status(400).json({ message: 'You cannot deactivate your own account' })
+    }
+
+    target.status = status
+  }
   target.profile = { ...target.profile?.toObject?.(), ...profile }
   if (password) target.passwordHash = await User.hashPassword(password)
 

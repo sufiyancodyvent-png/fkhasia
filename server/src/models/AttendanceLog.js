@@ -9,13 +9,13 @@ const attendanceLogSchema = new mongoose.Schema(
     breakStartedAt: Date,
     totalBreakMinutes: { type: Number, default: 0 },
     workMode: { type: String, default: 'In Office (HQ)' },
-    note: { type: String, trim: true, maxlength: 500, default: '' },
+    note: { type: String, default: '' },
     status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
     source: { type: String, enum: ['self', 'admin', 'system'], default: 'self' },
   },
   { timestamps: true },
 )
 
-attendanceLogSchema.index({ user: 1, date: 1 }, { unique: true })
+attendanceLogSchema.index({ user: 1, date: 1, clockInAt: -1 })
 
 export const AttendanceLog = mongoose.model('AttendanceLog', attendanceLogSchema)

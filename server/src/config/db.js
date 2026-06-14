@@ -1,9 +1,38 @@
 import mongoose from 'mongoose'
 import dns from 'dns'
 import { env } from './env.js'
+import { AttendanceLog } from '../models/AttendanceLog.js'
 
-const cached = globalThis.__fkhasiaMongoose || { connection: null, promise: null }
+const cached = globalThis.__fkhasiaMongoose || { connection: null, indexesReady: false, promise: null }
 globalThis.__fkhasiaMongoose = cached
+
+async function ensureAttendanceIndexes() {
+  let indexes = []
+
+  try {
+    indexes = await AttendanceLog.collection.indexes()
+  } catch (error) {
+    if (error.codeName !== 'NamespaceNotFound') {
+      throw error
+    }
+  }
+
+  const legacyUniqueDateIndex = indexes.find((index) => (
+    index.unique
+    && index.key?.user === 1
+    && index.key?.date === 1
+    && Object.keys(index.key).length === 2
+  ))
+
+  if (legacyUniqueDateIndex) {
+    await AttendanceLog.collection.dropIndex(legacyUniqueDateIndex.name)
+  }
+
+  await AttendanceLog.collection.createIndex(
+    { user: 1, date: 1, clockInAt: -1 },
+    { name: 'user_1_date_1_clockInAt_-1' },
+  )
+}
 
 export async function connectDb() {
   mongoose.set('strictQuery', true)
@@ -27,6 +56,12 @@ export async function connectDb() {
 
     await cached.promise
     cached.connection = mongoose.connection
+
+    if (!cached.indexesReady) {
+      await ensureAttendanceIndexes()
+      cached.indexesReady = true
+    }
+
     return cached.connection
   } catch (error) {
     cached.promise = null

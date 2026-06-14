@@ -2528,10 +2528,6 @@ button:not(:disabled):active,
   background: #eaf2ff !important;
 }
 
-#root .setting-toggle.on {
-  background: linear-gradient(135deg, #2563eb, #0891b2) !important;
-}
-
 #root .attendance-settings-card {
   overflow: visible !important;
 }
@@ -2578,6 +2574,62 @@ button:not(:disabled):active,
   max-width: 100% !important;
 }
 
+#root .setting-toggle-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 78px !important;
+  height: 52px !important;
+  padding: 0 !important;
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+
+#root .setting-toggle-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.2) !important;
+  outline-offset: 3px !important;
+}
+
+#root .setting-toggle {
+  position: relative !important;
+  display: block !important;
+  width: 62px !important;
+  height: 34px !important;
+  flex: 0 0 62px !important;
+  border: 1px solid #cbd7e8 !important;
+  border-radius: 999px !important;
+  background: #e6edf6 !important;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08) !important;
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease !important;
+}
+
+#root .setting-toggle::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 3px !important;
+  left: 3px !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+  box-shadow: 0 7px 14px rgba(15, 23, 42, 0.18) !important;
+  transition: transform 160ms ease !important;
+}
+
+#root .setting-toggle.on {
+  border-color: #1d7fe8 !important;
+  background: linear-gradient(135deg, #2563eb, #0891b2) !important;
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.2) !important;
+}
+
+#root .setting-toggle.on::after {
+  left: 3px !important;
+  transform: translateX(28px) !important;
+}
+
 #root .setting-number {
   display: grid !important;
   grid-template-columns: minmax(86px, 104px) auto !important;
@@ -2605,13 +2657,39 @@ button:not(:disabled):active,
 }
 
 #root .time-pill {
-  width: 244px !important;
+  width: 252px !important;
   min-width: 0 !important;
-  padding: 0 14px !important;
+  justify-content: space-between !important;
+  padding: 0 12px 0 16px !important;
 }
 
+#root .time-pill input,
 #root .time-pill select {
   width: 100% !important;
+  min-width: 0 !important;
+  height: 42px !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  color: #07142a !important;
+  font-family: var(--font-ui) !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+}
+
+#root .time-pill input::-webkit-calendar-picker-indicator {
+  cursor: pointer !important;
+  opacity: 0.65 !important;
+}
+
+#root .time-pill svg {
+  flex: 0 0 auto !important;
+  color: #07142a !important;
+}
+
+#root .time-pill:focus-within {
+  border-color: #7bb7ff !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12) !important;
 }
 
 @media (max-width: 1180px) {
@@ -2632,6 +2710,124 @@ button:not(:disabled):active,
   #root .time-pill {
     justify-self: stretch !important;
     width: 100% !important;
+  }
+}
+
+@media (max-width: 760px) {
+  #root .employee-dashboard-ref {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  #root .employee-dashboard-ref .edb-shift-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 20px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  #root .employee-dashboard-ref .edb-goal-card,
+  #root .employee-dashboard-ref .edb-shift-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  #root .employee-dashboard-ref .edb-shift-card {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  #root .employee-dashboard-ref .edb-shift-actions {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  #root .dashboard-shell,
+  #root .dashboard-shell.nav-expanded {
+    display: block !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+    background: #f7f9fc !important;
+  }
+
+  #root .dashboard-shell .sidebar,
+  #root .dashboard-shell.nav-expanded .sidebar {
+    display: block !important;
+    grid-column: auto !important;
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    background: #0b254c !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    overflow: hidden !important;
+    align-self: auto !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    position: fixed !important;
+    inset: 0 auto 0 0 !important;
+    z-index: 40 !important;
+  }
+
+  #root .dashboard-shell .sidebar::before,
+  #root .dashboard-shell.nav-expanded .sidebar::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 64px !important;
+    transform: none !important;
+    opacity: 1 !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    background: #0b254c !important;
+  }
+
+  #root .dashboard-shell .dashboard-main,
+  #root .dashboard-shell.nav-expanded .dashboard-main {
+    grid-column: auto !important;
+    margin-left: 64px !important;
+    width: calc(100% - 64px) !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 64px) !important;
+    overflow-x: hidden !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .sidebar-brand > div:not(.brand-mark),
+  #root .dashboard-shell.nav-expanded .side-nav::before,
+  #root .dashboard-shell.nav-expanded .expanded-nav-list {
+    display: none !important;
+  }
+
+  #root .dashboard-shell .side-nav,
+  #root .dashboard-shell.nav-expanded .side-nav {
+    top: 104px !important;
+    left: 0 !important;
+    width: 64px !important;
+  }
+
+  #root .dashboard-shell .side-nav .rail-item,
+  #root .dashboard-shell.nav-expanded .side-nav .rail-item {
+    width: 64px !important;
+    grid-template-columns: 64px !important;
+  }
+
+  #root .dashboard-shell .side-nav .rail-item > span,
+  #root .dashboard-shell.nav-expanded .side-nav .rail-item > span {
+    display: none !important;
+  }
+
+  #root .dashboard-shell .logout-button.sidebar-toggle,
+  #root .dashboard-shell.nav-expanded .logout-button.sidebar-toggle {
+    left: 8px !important;
+    width: 48px !important;
+    min-width: 48px !important;
   }
 }
 
@@ -2667,4 +2863,488 @@ button:not(:disabled):active,
 #root .metric-icon.rose svg {
   color: #e92d63 !important;
   stroke: #e92d63 !important;
+}
+
+.mobile-sidebar-toggle {
+  display: none;
+}
+
+/* Mobile sidebar drawer recovery: collapsed rail stays compact, expanded state opens as an overlay. */
+@media (max-width: 760px) {
+  #root .dashboard-shell,
+  #root .dashboard-shell.nav-expanded {
+    display: block !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  #root .dashboard-shell .sidebar,
+  #root .dashboard-shell.nav-expanded .sidebar {
+    position: fixed !important;
+    inset: 0 auto 0 0 !important;
+    display: block !important;
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    overflow: hidden !important;
+    background: #0b254c !important;
+    border-right: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 50 !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .sidebar {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    background: #fff !important;
+    border-right: 1px solid #dbe5f3 !important;
+    box-shadow: 20px 0 42px rgba(8, 26, 56, 0.2) !important;
+  }
+
+  #root .dashboard-shell .sidebar::before,
+  #root .dashboard-shell.nav-expanded .sidebar::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 auto 0 0 !important;
+    width: 64px !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    background: #0b254c !important;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: 0 !important;
+  }
+
+  #root .dashboard-shell .sidebar > *,
+  #root .dashboard-shell.nav-expanded .sidebar > * {
+    z-index: 1 !important;
+  }
+
+  #root .dashboard-shell .sidebar-brand,
+  #root .dashboard-shell.nav-expanded .sidebar-brand {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  #root .dashboard-shell .side-nav,
+  #root .dashboard-shell.nav-expanded .side-nav {
+    position: absolute !important;
+    top: 104px !important;
+    left: 0 !important;
+  }
+
+  #root .dashboard-shell .logout-button.sidebar-toggle,
+  #root .dashboard-shell.nav-expanded .logout-button.sidebar-toggle {
+    display: none !important;
+  }
+
+  #root .dashboard-shell .dashboard-main,
+  #root .dashboard-shell.nav-expanded .dashboard-main {
+    width: calc(100% - 64px) !important;
+    max-width: calc(100% - 64px) !important;
+    margin-left: 64px !important;
+    overflow-x: hidden !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .sidebar-brand {
+    display: grid !important;
+    grid-template-columns: 64px minmax(0, 1fr) 42px !important;
+    min-height: 104px !important;
+    gap: 12px !important;
+    align-items: center !important;
+    padding: 14px 12px 14px 0 !important;
+    background:
+      linear-gradient(90deg, #0b254c 0 64px, #fff 64px 100%) !important;
+    border-bottom: 0 !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .sidebar-brand::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .sidebar-brand > div:not(.brand-mark),
+  #root .dashboard-shell.nav-expanded .sidebar-brand strong,
+  #root .dashboard-shell.nav-expanded .sidebar-brand span {
+    display: block !important;
+    min-width: 0 !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .mobile-sidebar-toggle,
+  #root .employee-shell.nav-expanded .mobile-sidebar-toggle {
+    display: grid !important;
+    place-items: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    border: 0 !important;
+    border-radius: 11px !important;
+    color: #41516d !important;
+    background: #edf4ff !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .mobile-sidebar-toggle svg,
+  #root .employee-shell.nav-expanded .mobile-sidebar-toggle svg {
+    color: inherit !important;
+    stroke: currentColor !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .side-nav {
+    position: absolute !important;
+    display: block !important;
+    top: 104px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    padding: 38px 12px 18px 0 !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .side-nav::before {
+    content: attr(data-section) !important;
+    display: block !important;
+    position: absolute !important;
+    top: 12px !important;
+    left: 92px !important;
+    max-width: 170px !important;
+    color: #93a2bb !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .side-nav .rail-item {
+    width: 64px !important;
+    grid-template-columns: 64px !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .side-nav .rail-item > span {
+    display: none !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .expanded-nav-list {
+    position: absolute !important;
+    top: 38px !important;
+    left: 82px !important;
+    right: 12px !important;
+    display: grid !important;
+    gap: 8px !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .expanded-nav-list button {
+    display: grid !important;
+    grid-template-columns: 24px minmax(0, 1fr) !important;
+    align-items: center !important;
+    min-height: 42px !important;
+    width: 100% !important;
+    padding: 0 10px !important;
+    border-radius: 9px !important;
+    color: #8a99b3 !important;
+    background: transparent !important;
+    text-align: left !important;
+  }
+
+  #root .dashboard-shell.nav-expanded .expanded-nav-list button span {
+    display: block !important;
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+    color: inherit !important;
+    background: transparent !important;
+    font-size: 12px !important;
+    font-weight: 850 !important;
+    line-height: 1.2 !important;
+  }
+
+  #root .employee-shell,
+  #root .employee-shell.nav-expanded {
+    display: grid !important;
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  #root .employee-shell .employee-main,
+  #root .employee-shell.nav-expanded .employee-main {
+    grid-column: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  #root .employee-shell .employee-rail,
+  #root .employee-shell.nav-expanded .employee-rail {
+    position: fixed !important;
+    inset: 0 auto 0 0 !important;
+    display: block !important;
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    background: #081a38 !important;
+    border-right: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 50 !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-rail {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    background: #fff !important;
+    border-right: 1px solid #dbe5f3 !important;
+    box-shadow: 20px 0 42px rgba(8, 26, 56, 0.2) !important;
+  }
+
+  #root .employee-shell .employee-rail::before,
+  #root .employee-shell.nav-expanded .employee-rail::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 auto 0 0 !important;
+    width: 64px !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    background: #081a38 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-menu-panel {
+    position: absolute !important;
+    inset: 0 0 0 64px !important;
+    display: block !important;
+    width: calc(100% - 64px) !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    background: #fff !important;
+    z-index: 2 !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-rail-brand {
+    display: none !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-brand {
+    display: grid !important;
+    grid-template-columns: 54px minmax(0, 1fr) 42px !important;
+    height: 104px !important;
+    min-height: 104px !important;
+    gap: 12px !important;
+    align-items: center !important;
+    padding: 14px 12px 14px 16px !important;
+    border-bottom: 0 !important;
+    background: #fff !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-brand::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-logo {
+    display: block !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    border-radius: 11px !important;
+    opacity: 1 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-brand strong,
+  #root .employee-shell.nav-expanded .employee-panel-brand span {
+    display: block !important;
+    min-width: 0 !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-brand strong {
+    color: #07142a !important;
+    font-family: var(--font-ui) !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-brand span {
+    margin-top: 4px !important;
+    color: #5d6f90 !important;
+    font-family: var(--font-ui) !important;
+    font-size: 10px !important;
+    font-weight: 750 !important;
+    line-height: 1.2 !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-menu {
+    display: grid !important;
+    gap: 8px !important;
+    padding: 22px 12px 18px 18px !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-menu p {
+    margin: 0 0 8px !important;
+    color: #93a2bb !important;
+    font-family: var(--font-ui) !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    letter-spacing: 2px !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-menu button {
+    display: grid !important;
+    grid-template-columns: 24px minmax(0, 1fr) !important;
+    align-items: center !important;
+    min-height: 42px !important;
+    width: 100% !important;
+    padding: 0 10px !important;
+    border: 0 !important;
+    border-radius: 9px !important;
+    color: #8a99b3 !important;
+    background: transparent !important;
+    text-align: left !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-menu button.active {
+    color: #2563eb !important;
+    background: #eaf2ff !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-panel-menu button span {
+    display: block !important;
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+    color: inherit !important;
+    background: transparent !important;
+    font-size: 12px !important;
+    font-weight: 850 !important;
+    line-height: 1.2 !important;
+  }
+
+  #root .employee-shell.nav-expanded .employee-rail-nav,
+  #root .employee-shell.nav-expanded .employee-rail-nav > button {
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+  }
+}
+
+/* Final employee sidebar polish: only the current page is active and the header cannot overlap. */
+#root .employee-shell.nav-expanded .employee-panel-brand {
+  display: grid !important;
+  grid-template-columns: 50px minmax(0, 1fr) !important;
+  height: 104px !important;
+  min-height: 104px !important;
+  gap: 12px !important;
+  align-items: center !important;
+  place-items: center start !important;
+  padding: 14px 12px 14px 16px !important;
+  border-bottom: 0 !important;
+  background: #fff !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-brand::before {
+  content: none !important;
+  display: none !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-logo {
+  display: block !important;
+  position: static !important;
+  z-index: auto !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  border-radius: 11px !important;
+  opacity: 1 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-brand > div {
+  display: block !important;
+  min-width: 0 !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-brand strong {
+  display: block !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  color: #07142a !important;
+  font-family: var(--font-ui) !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-brand span {
+  display: block !important;
+  width: auto !important;
+  margin-top: 4px !important;
+  overflow: hidden !important;
+  color: #5d6f90 !important;
+  font-family: var(--font-ui) !important;
+  font-size: 10px !important;
+  font-weight: 750 !important;
+  line-height: 1.2 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-menu {
+  display: grid !important;
+  gap: 8px !important;
+  padding: 22px 12px 18px 18px !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-menu button,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button {
+  color: #8a99b3 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-menu button svg,
+#root .employee-shell.nav-expanded .employee-panel-menu button span,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button svg,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button span {
+  color: inherit !important;
+  stroke: currentColor !important;
+}
+
+#root .employee-shell.nav-expanded .employee-panel-menu button.active,
+#root .employee-shell.nav-expanded .employee-menu-panel .employee-panel-menu button.active {
+  color: #2563eb !important;
+  background: #eaf2ff !important;
+}
+
+@media (max-width: 760px) {
+  #root .employee-shell.nav-expanded .employee-panel-brand {
+    grid-template-columns: 54px minmax(0, 1fr) 42px !important;
+  }
 }

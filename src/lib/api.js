@@ -102,6 +102,13 @@ export function endBreak() {
   })
 }
 
+export function updateDailyNote(note) {
+  return apiRequest('/attendance/today/note', {
+    method: 'PATCH',
+    body: JSON.stringify({ note }),
+  })
+}
+
 export function updateAttendanceStatus(id, status) {
   return apiRequest(`/attendance/${id}/status`, {
     method: 'PATCH',

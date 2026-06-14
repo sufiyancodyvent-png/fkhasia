@@ -55,6 +55,14 @@ function Sidebar({ menuOpen, onOpenMenu, onToggleMenu }) {
           <strong>FKH ASIA</strong>
           <span>HR Management</span>
         </div>
+        <button
+          className="mobile-sidebar-toggle"
+          type="button"
+          aria-label={menuOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+          onClick={onToggleMenu}
+        >
+          <Icon name="menu" size={18} />
+        </button>
       </div>
       <nav className="side-nav" aria-label="Admin navigation" data-section={sectionLabel}>
         {railItems.map((item) => (

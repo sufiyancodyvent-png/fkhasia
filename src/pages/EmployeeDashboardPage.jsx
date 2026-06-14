@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import EmployeeLayout from '../components/employee/EmployeeLayout'
 import Icon from '../components/icons/Icon'
 import PageLoader from '../components/ui/PageLoader'
-import { clockIn, clockOut, endBreak, getEmployeeDashboard, getSession, startBreak } from '../lib/api'
+import { clockIn, clockOut, endBreak, getEmployeeDashboard, getSession, startBreak, updateDailyNote } from '../lib/api'
 import { formatClockTime, formatShiftRange } from '../lib/time'
 
 function formatDate(value) {
@@ -22,6 +22,15 @@ function formatDuration(totalSeconds) {
   const minutes = String(Math.floor((safeSeconds % 3600) / 60)).padStart(2, '0')
   const seconds = String(safeSeconds % 60).padStart(2, '0')
   return `${hours}:${minutes}:${seconds}`
+}
+
+function formatLiveClock(value) {
+  return new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+  }).format(value)
 }
 
 function normalizeWorkMode(value) {
@@ -52,13 +61,21 @@ function TimeCell({ time, badge, delta }) {
   )
 }
 
+function csvCell(value) {
+  const text = String(value ?? '').replaceAll('"', '""')
+  return `"${text}"`
+}
+
 function EmployeeDashboardPage() {
   const navigate = useNavigate()
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [actionLoading, setActionLoading] = useState('')
   const [selectedWorkMode, setSelectedWorkMode] = useState('Office')
-  const [now, setNow] = useState(0)
+  const [dailyNote, setDailyNote] = useState('')
+  const [isNotesOpen, setIsNotesOpen] = useState(false)
+  const [noteSaved, setNoteSaved] = useState(false)
+  const [now, setNow] = useState(() => Date.now())
   const [error, setError] = useState('')
 
   const loadDashboard = useCallback(async () => {
@@ -91,31 +108,20 @@ function EmployeeDashboardPage() {
   useEffect(() => {
     if (!data) return
     setSelectedWorkMode(normalizeWorkMode(data.todayLog?.workMode || data.user?.workMode || 'Office'))
+    setDailyNote(data.todayLog?.note || '')
   }, [data])
-
-  const quickActions = useMemo(() => [
-    {
-      tone: 'attendance',
-      icon: 'calendarClock',
-      total: `TOTAL: ${data?.summary?.records || 0}`,
-      title: 'Attendance Records',
-      text: 'Review Your Monthly Attendance Logs',
-      pending: `Approved: ${data?.summary?.approved || 0}`,
-    },
-  ], [data])
 
   const stats = useMemo(() => [
     { icon: 'circleCheck', tone: 'blue', label: 'ATTENDANCE RATE', value: `${data?.summary?.attendanceRate || 0}%`, note: '' },
     { icon: 'clock', tone: 'blue', label: 'DAYS WORKED', value: String(data?.summary?.daysWorked || 0), note: 'This Month' },
     { icon: 'timer', tone: 'orange', label: 'TOTAL HOURS', value: `${data?.summary?.workedHours || 0}h`, note: 'This Month' },
-    { icon: 'circleAlert', tone: 'rose', label: 'PENDING LEAVE', value: String(data?.summary?.pendingLeave || 0), note: 'Requests' },
   ], [data])
 
   const handleClockIn = async () => {
     try {
       setActionLoading('clock')
       setError('')
-      await clockIn({ workMode: selectedWorkMode })
+      await clockIn({ workMode: selectedWorkMode, note: dailyNote })
       await loadDashboard()
     } catch (err) {
       setError(err.message)
@@ -154,6 +160,45 @@ function EmployeeDashboardPage() {
     }
   }
 
+  const handleSaveNote = async () => {
+    try {
+      setActionLoading('note')
+      setError('')
+      const result = await updateDailyNote(dailyNote)
+      setData((current) => current ? { ...current, todayLog: result.log } : current)
+      setNoteSaved(true)
+      setIsNotesOpen(false)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setActionLoading('')
+    }
+  }
+
+  const handleExportCsv = () => {
+    const headers = ['Date', 'Shift Details', 'Clock In', 'Clock Out', 'Break', 'Total Work', 'Status', 'Daily Note']
+    const rows = logs.map((log) => [
+      formatDate(log.date),
+      shiftLabel(settings),
+      formatClockTime(log.clockInAt),
+      formatClockTime(log.clockOutAt),
+      log.totalBreakMinutes ? `${log.totalBreakMinutes}m` : '-',
+      totalHours(log),
+      String(log.status || 'pending').toUpperCase(),
+      log.note || '',
+    ])
+    const csv = [headers, ...rows].map((row) => row.map(csvCell).join(',')).join('\n')
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `fkhasia-attendance-${currentMonthLabel.toLowerCase().replace(' ', '-')}.csv`
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(url)
+  }
+
   const settings = data?.settings || {}
   const summary = data?.summary || {}
   const userName = data?.user?.name || getSession()?.user?.name || 'Employee'
@@ -162,11 +207,11 @@ function EmployeeDashboardPage() {
   const isClockedIn = Boolean(todayLog?.clockInAt && !todayLog?.clockOutAt)
   const isOnBreak = Boolean(todayLog?.breakStartedAt && isClockedIn)
   const shiftStatus = isClockedIn ? (isOnBreak ? 'ON BREAK' : 'ONLINE') : 'OFFLINE'
-  const workModeOptions = useMemo(() => {
+  const workModeOptions = (() => {
     const modes = settings.workModes?.length ? settings.workModes : ['Office', 'Remote', 'Hybrid']
     return [...new Set(modes.map(normalizeWorkMode))]
-  }, [settings.workModes])
-  const workedSeconds = useMemo(() => {
+  })()
+  const workedSeconds = (() => {
     if (!todayLog?.clockInAt) return 0
 
     const endTime = todayLog.clockOutAt ? new Date(todayLog.clockOutAt).getTime() : now
@@ -176,7 +221,7 @@ function EmployeeDashboardPage() {
       : 0
 
     return Math.floor((endTime - new Date(todayLog.clockInAt).getTime()) / 1000) - breakSeconds - activeBreakSeconds
-  }, [now, todayLog])
+  })()
   const currentMonthLabel = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(new Date()).toUpperCase()
 
   return (
@@ -193,7 +238,7 @@ function EmployeeDashboardPage() {
             <p>Here Is What Is Happening With Your Account</p>
           </div>
           <div className="edb-clock">
-            <strong>{formatClockTime(new Date())}</strong>
+            <strong>{formatLiveClock(new Date(now))}</strong>
             <span>{new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: '2-digit' }).format(new Date()).toUpperCase()}</span>
           </div>
         </div>
@@ -256,7 +301,7 @@ function EmployeeDashboardPage() {
                     className="edb-work-mode-select"
                     value={selectedWorkMode}
                     onChange={(event) => setSelectedWorkMode(event.target.value)}
-                    disabled={isClockedIn || Boolean(todayLog?.clockOutAt)}
+                    disabled={isClockedIn}
                     aria-label="Work mode"
                   >
                     {workModeOptions.map((mode) => (
@@ -269,32 +314,19 @@ function EmployeeDashboardPage() {
                 <span className="edb-work-icon"><Icon name="file" size={21} /></span>
                 <div>
                   <small>DAILY NOTE</small>
-                  <p>Add remark...</p>
+                  <button
+                    className="edb-notes-button"
+                    type="button"
+                    onClick={() => setIsNotesOpen(true)}
+                  >
+                    <Icon name="file" size={16} />
+                    <span>{dailyNote ? 'View Notes' : 'Add Notes'}</span>
+                  </button>
+                  {noteSaved && <p className="edb-note-status">Saved</p>}
                 </div>
               </div>
             </div>
           </article>
-        </section>
-
-        <section className="edb-quick-section" aria-labelledby="quick-access-title">
-          <div className="edb-section-head">
-            <h3 id="quick-access-title">QUICK ACCESS</h3>
-            <span>Jump To Frequent Actions</span>
-          </div>
-          <div className="edb-quick-grid">
-            {quickActions.map((action) => (
-              <article className={`edb-quick-card ${action.tone}`} key={action.title}>
-                <div className="edb-quick-icon"><Icon name={action.icon} size={27} /></div>
-                <span className="edb-total-pill">{action.total}</span>
-                <h3>{action.title}</h3>
-                <p>{action.text}</p>
-                <div className="edb-quick-foot">
-                  <strong>{action.pending}</strong>
-                  <button type="button">Open</button>
-                </div>
-              </article>
-            ))}
-          </div>
         </section>
 
         <section className="edb-stats-grid" aria-label="Attendance summary">
@@ -314,17 +346,9 @@ function EmployeeDashboardPage() {
           <div className="edb-log-head">
             <h2>Log History <span>{currentMonthLabel}</span></h2>
             <div className="edb-log-actions">
-              <button className="edb-date-button" type="button">
-                <Icon name="calendar" size={18} />
-                <span>dd/mm/yyyy</span>
-                <Icon name="calendarSolid" size={16} />
-              </button>
-              <button className="edb-filter-button" type="button" aria-label="Filter logs">
-                <Icon name="filter" size={19} />
-              </button>
-              <button className="edb-export-button" type="button">
+              <button className="edb-export-button" type="button" onClick={handleExportCsv}>
                 <Icon name="download" size={18} />
-                <span>Export</span>
+                <span>Export CSV</span>
               </button>
             </div>
           </div>
@@ -340,7 +364,6 @@ function EmployeeDashboardPage() {
                   <th>BREAK</th>
                   <th>TOTAL<br />WORK</th>
                   <th>STATUS</th>
-                  <th>ACTION</th>
                 </tr>
               </thead>
               <tbody>
@@ -353,16 +376,11 @@ function EmployeeDashboardPage() {
                     <td>{log.totalBreakMinutes ? `${log.totalBreakMinutes}m` : '-'}</td>
                     <td><strong>{totalHours(log)}</strong></td>
                     <td><span className="edb-approved">{String(log.status || 'pending').toUpperCase()}</span></td>
-                    <td>
-                      <button className="edb-eye-button" type="button" aria-label={`View ${log.date} log`}>
-                        <Icon name="eye" size={18} />
-                      </button>
-                    </td>
                   </tr>
                 ))}
                 {!logs.length && (
                   <tr>
-                    <td colSpan="8">No attendance logs yet.</td>
+                    <td colSpan="7">No attendance logs yet.</td>
                   </tr>
                 )}
               </tbody>
@@ -370,6 +388,47 @@ function EmployeeDashboardPage() {
           </div>
         </article>
           </>
+        )}
+        {isNotesOpen && (
+          <div className="edb-note-modal-backdrop" role="presentation" onClick={() => setIsNotesOpen(false)}>
+            <section
+              className="edb-note-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="daily-note-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="edb-note-modal-head">
+                <div>
+                  <span>WORK NOTES</span>
+                  <h2 id="daily-note-title">Daily Note</h2>
+                </div>
+                <button type="button" onClick={() => setIsNotesOpen(false)} aria-label="Close notes">x</button>
+              </div>
+              <textarea
+                value={dailyNote}
+                onChange={(event) => {
+                  setDailyNote(event.target.value)
+                  setNoteSaved(false)
+                }}
+                placeholder="Write today's work note..."
+              />
+              <div className="edb-note-modal-foot">
+                <span>Saved until you change it</span>
+                <div>
+                  <button className="edb-note-cancel" type="button" onClick={() => setIsNotesOpen(false)}>Cancel</button>
+                  <button
+                    className="edb-note-save"
+                    type="button"
+                    onClick={handleSaveNote}
+                    disabled={actionLoading === 'note'}
+                  >
+                    {actionLoading === 'note' ? 'Saving...' : 'Save Note'}
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
         )}
       </div>
     </EmployeeLayout>

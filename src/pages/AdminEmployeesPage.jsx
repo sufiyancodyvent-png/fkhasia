@@ -84,6 +84,7 @@ function EmployeeModal({ departments, editingEmployee, form, onChange, onClose, 
             <select value={form.role} onChange={(event) => onChange('role', event.target.value)}>
               <option value="employee">Employee</option>
               <option value="manager">Manager</option>
+              <option value="admin">Admin</option>
             </select>
           </label>
           <label>
@@ -165,7 +166,7 @@ function AdminEmployeesPage() {
       }
 
       const [usersResult, departmentResult] = await Promise.all([getUsers(), getDepartments()])
-      setEmployees((usersResult.users || []).filter((user) => user.role !== 'admin'))
+      setEmployees(usersResult.users || [])
       setDepartments(departmentResult.departments || [])
     } finally {
       setLoading(false)
@@ -242,10 +243,10 @@ function AdminEmployeesPage() {
     try {
       if (editingEmployee) {
         await updateUser(userId(editingEmployee), buildPayload())
-        setSuccess('Employee updated successfully.')
+        setSuccess('User updated successfully.')
       } else {
         await createUser(buildPayload())
-        setSuccess('Employee created successfully.')
+        setSuccess('User created successfully.')
       }
       closeModal()
       await loadData()
@@ -263,7 +264,7 @@ function AdminEmployeesPage() {
       setError('')
       setSuccess('')
       await deleteUser(userId(employee))
-      setSuccess('Employee deleted successfully.')
+      setSuccess('User deleted successfully.')
       await loadData()
     } catch (err) {
       setError(err.message)
@@ -276,7 +277,7 @@ function AdminEmployeesPage() {
         <header className="admin-page-head">
           <div>
             <h1>Employee Directory</h1>
-            <p>Manage team members, access, departments, and CV records.</p>
+            <p>Manage team members, admin access, departments, and CV records.</p>
           </div>
           <button className="green-action" type="button" onClick={openCreate}>
             <Icon name="plus" size={18} />
@@ -346,7 +347,13 @@ function AdminEmployeesPage() {
                 <button type="button" aria-label={`Edit ${employee.name}`} onClick={() => openEdit(employee)}>
                   <Icon name="pencil" size={16} />
                 </button>
-                <button type="button" aria-label={`Delete ${employee.name}`} onClick={() => handleDelete(employee)}>
+                <button
+                  type="button"
+                  aria-label={`Delete ${employee.name}`}
+                  disabled={employee.role === 'admin'}
+                  title={employee.role === 'admin' ? 'Admin accounts cannot be deleted from this page' : 'Delete user'}
+                  onClick={() => handleDelete(employee)}
+                >
                   <Icon name="trash" size={16} />
                 </button>
               </div>

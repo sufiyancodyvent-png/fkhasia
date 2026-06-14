@@ -105,20 +105,25 @@ function AdminAttendanceSettingsPage() {
           </div>
 
           <div className="setting-time-grid">
+            <datalist id="attendance-time-options">
+              {timeOptions.map((option) => (
+                <option value={option.value} label={option.label} key={option.value} />
+              ))}
+            </datalist>
             <div className="setting-row compact">
               <div>
                 <h2>Shift Start Time</h2>
                 <p>Standard Shift Start Time</p>
               </div>
               <div className="time-pill">
-                <select
+                <input
+                  type="time"
+                  step="900"
+                  list="attendance-time-options"
                   value={current.shiftStart || '09:00'}
                   onChange={(event) => updateField('shiftStart', event.target.value)}
-                >
-                  {timeOptions.map((option) => (
-                    <option value={option.value} key={option.value}>{option.label}</option>
-                  ))}
-                </select>
+                  aria-label="Shift start time"
+                />
                 <Icon name="clock" size={17} />
               </div>
             </div>
@@ -128,14 +133,14 @@ function AdminAttendanceSettingsPage() {
                 <p>Standard Shift End Time</p>
               </div>
               <div className="time-pill">
-                <select
+                <input
+                  type="time"
+                  step="900"
+                  list="attendance-time-options"
                   value={current.shiftEnd || '18:00'}
                   onChange={(event) => updateField('shiftEnd', event.target.value)}
-                >
-                  {timeOptions.map((option) => (
-                    <option value={option.value} key={option.value}>{option.label}</option>
-                  ))}
-                </select>
+                  aria-label="Shift end time"
+                />
                 <Icon name="clock" size={17} />
               </div>
             </div>

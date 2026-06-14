@@ -14,7 +14,7 @@ function getActiveItem(pathname) {
   return employeeRailItems.find((item) => item.path && pathname.startsWith(item.path)) || employeeRailItems[0]
 }
 
-function EmployeeRail() {
+function EmployeeRail({ menuOpen, onToggleMenu }) {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const activeItem = getActiveItem(pathname)
@@ -27,13 +27,32 @@ function EmployeeRail() {
       <div className="employee-menu-panel">
         <div className="employee-panel-brand">
           <img className="employee-panel-logo" src={logo} alt="FKHASIA" />
+          <div>
+            <strong>FKH ASIA</strong>
+            <span>HR Management</span>
+          </div>
+          <button
+            className="mobile-sidebar-toggle"
+            type="button"
+            aria-label={menuOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+            onClick={onToggleMenu}
+          >
+            <Icon name="menu" size={18} />
+          </button>
         </div>
         <div className="employee-panel-menu">
           <p>{activeItem.section}</p>
-          <button className="active" type="button" onClick={() => navigate(activeItem.path)}>
-            <Icon name={activeItem.icon} size={20} />
-            <span>{activeItem.label}</span>
-          </button>
+          {employeeRailItems.map((item) => (
+            <button
+              className={item.key === activeItem.key ? 'active' : ''}
+              type="button"
+              key={item.key}
+              onClick={() => navigate(item.path)}
+            >
+              <Icon name={item.icon} size={20} />
+              <span>{item.label}</span>
+            </button>
+          ))}
         </div>
       </div>
       <div className="employee-rail-brand">
@@ -66,7 +85,7 @@ function EmployeeLayout({ children }) {
 
   return (
     <main className={menuOpen ? 'employee-shell nav-expanded' : 'employee-shell'}>
-      <EmployeeRail />
+      <EmployeeRail menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((open) => !open)} />
       <section className="employee-main">
         <Topbar
           title="Employee Dashboard"

@@ -16,14 +16,44 @@ function hoursBetween(start, end, breakMinutes = 0) {
   return Number((minutes / 60).toFixed(2))
 }
 
+function sortLatestSession() {
+  return { date: -1, clockInAt: -1, createdAt: -1 }
+}
+
+function openSessionQuery(user, date) {
+  return {
+    user,
+    date,
+    clockInAt: { $exists: true },
+    clockOutAt: { $exists: false },
+  }
+}
+
+function uniqueDates(logs) {
+  return new Set(logs.map((log) => log.date)).size
+}
+
 router.get('/me', requireAuth, asyncHandler(async (req, res) => {
-  const logs = await AttendanceLog.find({ user: req.user._id }).sort({ date: -1 }).limit(40)
+  const logs = await AttendanceLog.find({ user: req.user._id, clockInAt: { $exists: true } }).sort(sortLatestSession()).limit(40)
   res.json({ logs })
 }))
 
 router.get('/all', requireAuth, requireRole('admin', 'manager'), asyncHandler(async (req, res) => {
-  const logs = await AttendanceLog.find().populate('user', 'name email profile').sort({ date: -1 }).limit(100)
+  const logs = await AttendanceLog.find({ clockInAt: { $exists: true } }).populate('user', 'name email profile').sort(sortLatestSession()).limit(100)
   res.json({ logs })
+}))
+
+router.patch('/today/note', requireAuth, asyncHandler(async (req, res) => {
+  const note = typeof req.body.note === 'string' ? req.body.note : ''
+  const today = dateKey()
+  const activeLog = await AttendanceLog.findOne(openSessionQuery(req.user._id, today)).sort({ clockInAt: -1, createdAt: -1 })
+  const latestTodayLog = activeLog || await AttendanceLog.findOne({ user: req.user._id, date: today }).sort({ updatedAt: -1, createdAt: -1 })
+
+  const log = latestTodayLog || new AttendanceLog({ user: req.user._id, date: today, source: 'self' })
+  log.note = note
+  await log.save()
+
+  res.json({ log })
 }))
 
 router.patch('/:id/status', requireAuth, requireRole('admin', 'manager'), asyncHandler(async (req, res) => {
@@ -49,33 +79,32 @@ router.patch('/:id/status', requireAuth, requireRole('admin', 'manager'), asyncH
 router.post('/clock-in', requireAuth, asyncHandler(async (req, res) => {
   const today = dateKey()
   const settings = await AttendanceSettings.findOne()
-  const existingLog = await AttendanceLog.findOne({ user: req.user._id, date: today })
+  const activeLog = await AttendanceLog.findOne(openSessionQuery(req.user._id, today)).sort({ clockInAt: -1, createdAt: -1 })
 
-  if (existingLog?.clockOutAt) {
-    return res.status(400).json({ message: 'You have already clocked out today' })
+  if (activeLog) {
+    return res.json({ log: activeLog })
   }
 
-  const log = await AttendanceLog.findOneAndUpdate(
-    { user: req.user._id, date: today },
-    {
-      $setOnInsert: {
-        user: req.user._id,
-        date: today,
-        clockInAt: new Date(),
-        status: settings?.autoApproveAttendance ? 'approved' : 'pending',
-        workMode: req.body.workMode || 'In Office (HQ)',
-        note: req.body.note || '',
-      },
-    },
-    { returnDocument: 'after', upsert: true, setDefaultsOnInsert: true },
-  )
+  const latestTodayLog = await AttendanceLog.findOne({ user: req.user._id, date: today }).sort({ updatedAt: -1, createdAt: -1 })
+  const pendingNoteLog = latestTodayLog && !latestTodayLog.clockInAt ? latestTodayLog : null
+  const note = typeof req.body.note === 'string' ? req.body.note : pendingNoteLog?.note || latestTodayLog?.note || ''
+  const log = pendingNoteLog || new AttendanceLog({ user: req.user._id, date: today, source: 'self' })
+
+  log.clockInAt = new Date()
+  log.clockOutAt = undefined
+  log.breakStartedAt = undefined
+  log.totalBreakMinutes = 0
+  log.status = settings?.autoApproveAttendance ? 'approved' : 'pending'
+  log.workMode = req.body.workMode || pendingNoteLog?.workMode || 'In Office (HQ)'
+  log.note = note
+  await log.save()
 
   res.json({ log })
 }))
 
 router.post('/clock-out', requireAuth, asyncHandler(async (req, res) => {
   const today = dateKey()
-  const log = await AttendanceLog.findOne({ user: req.user._id, date: today })
+  const log = await AttendanceLog.findOne(openSessionQuery(req.user._id, today)).sort({ clockInAt: -1, createdAt: -1 })
 
   if (!log || !log.clockInAt) {
     return res.status(400).json({ message: 'Clock in before clocking out' })
@@ -98,7 +127,7 @@ router.post('/clock-out', requireAuth, asyncHandler(async (req, res) => {
 
 router.post('/break/start', requireAuth, asyncHandler(async (req, res) => {
   const today = dateKey()
-  const log = await AttendanceLog.findOne({ user: req.user._id, date: today })
+  const log = await AttendanceLog.findOne(openSessionQuery(req.user._id, today)).sort({ clockInAt: -1, createdAt: -1 })
 
   if (!log?.clockInAt) {
     return res.status(400).json({ message: 'Clock in before starting a break' })
@@ -120,7 +149,7 @@ router.post('/break/start', requireAuth, asyncHandler(async (req, res) => {
 
 router.post('/break/end', requireAuth, asyncHandler(async (req, res) => {
   const today = dateKey()
-  const log = await AttendanceLog.findOne({ user: req.user._id, date: today })
+  const log = await AttendanceLog.findOne(openSessionQuery(req.user._id, today)).sort({ clockInAt: -1, createdAt: -1 })
 
   if (!log?.clockInAt) {
     return res.status(400).json({ message: 'Clock in before ending a break' })
@@ -140,14 +169,15 @@ router.post('/break/end', requireAuth, asyncHandler(async (req, res) => {
 router.get('/summary/me', requireAuth, asyncHandler(async (req, res) => {
   const now = new Date()
   const monthPrefix = now.toISOString().slice(0, 7)
-  const logs = await AttendanceLog.find({ user: req.user._id, date: new RegExp(`^${monthPrefix}`) }).sort({ date: -1 })
+  const logs = await AttendanceLog.find({ user: req.user._id, date: new RegExp(`^${monthPrefix}`), clockInAt: { $exists: true } }).sort(sortLatestSession())
   const workedHours = logs.reduce((sum, log) => sum + hoursBetween(log.clockInAt, log.clockOutAt, log.totalBreakMinutes), 0)
   const approved = logs.filter((log) => log.status === 'approved').length
+  const daysWorked = uniqueDates(logs)
 
   res.json({
     summary: {
       workedHours: Number(workedHours.toFixed(1)),
-      daysWorked: logs.length,
+      daysWorked,
       approved,
       records: logs.length,
     },
