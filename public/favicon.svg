@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FKH ASIA">
+  <defs>
+    <linearGradient id="card" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#edf6ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#0b254c"/>
+  <rect x="7" y="7" width="50" height="50" rx="13" fill="url(#card)"/>
+  <path d="M18 22h10M16 29h12M18 36h8" fill="none" stroke="#0b254c" stroke-width="2.6" stroke-linecap="round"/>
+  <text x="34" y="34" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#0b254c">FKH</text>
+  <text x="34" y="45" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="800" fill="#19b9b0">ASIA</text>
+  <circle cx="39" cy="20" r="2.6" fill="#0b254c"/>
+  <circle cx="46" cy="24" r="2.2" fill="#19b9b0"/>
+  <circle cx="32" cy="20" r="2.2" fill="#0b254c"/>
+</svg>
