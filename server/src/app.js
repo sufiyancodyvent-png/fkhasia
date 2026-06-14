@@ -5,6 +5,7 @@ import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { connectDb } from './config/db.js'
 import { env } from './config/env.js'
 import authRoutes from './routes/authRoutes.js'
 import attendanceRoutes from './routes/attendanceRoutes.js'
@@ -43,6 +44,20 @@ app.use(rateLimit({
 
 app.get('/api/health', (req, res) => {
   res.json({ ok: true, service: 'fkhasia-api' })
+})
+
+app.use('/api', async (req, res, next) => {
+  try {
+    await connectDb()
+    next()
+  } catch (error) {
+    const dbError = new Error(
+      'Database connection failed. Make sure your current IP address is added to the MongoDB Atlas network access whitelist.',
+    )
+    dbError.statusCode = 503
+    dbError.cause = error
+    next(dbError)
+  }
 })
 
 app.use('/api/auth', authRoutes)

@@ -4,10 +4,18 @@ import app from './app.js'
 
 async function start() {
   assertEnv()
-  await connectDb()
   app.listen(env.port, () => {
     console.log(`FKHASIA API running on port ${env.port}`)
   })
+
+  connectDb()
+    .then(() => {
+      console.log('MongoDB connected')
+    })
+    .catch((error) => {
+      console.error(error.message)
+      console.error('API is still running. Fix MongoDB access and retry the request.')
+    })
 }
 
 start().catch((error) => {
