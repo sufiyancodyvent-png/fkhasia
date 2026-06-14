@@ -102,14 +102,6 @@ function EmployeeDashboardPage() {
       text: 'Review Your Monthly Attendance Logs',
       pending: `Approved: ${data?.summary?.approved || 0}`,
     },
-    {
-      tone: 'leave',
-      icon: 'clipboardCheck',
-      total: `TOTAL: ${data?.summary?.pendingLeave || 0}`,
-      title: 'Leave Requests',
-      text: 'Track Leave Requests And Approvals',
-      pending: `Pending: ${data?.summary?.pendingLeave || 0}`,
-    },
   ], [data])
 
   const stats = useMemo(() => [
