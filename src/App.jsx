@@ -21,6 +21,7 @@ function App() {
       <Route path="/employee" element={<EmployeeDashboardPage />} />
       <Route path="/employee/dashboard" element={<EmployeeDashboardPage />} />
       <Route path="/employee/attendance" element={<EmployeeAttendancePage />} />
+      <Route path="/employee/profile" element={<AdminProfilePage employee />} />
       <Route path="/admin" element={<AdminDashboardPage />} />
       <Route path="/admin/members" element={<Navigate to="/admin" replace />} />
       <Route path="/admin/roles" element={<Navigate to="/admin" replace />} />

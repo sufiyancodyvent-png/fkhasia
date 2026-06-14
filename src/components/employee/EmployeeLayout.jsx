@@ -73,7 +73,7 @@ function EmployeeRail({ menuOpen, onToggleMenu }) {
   )
 }
 
-function EmployeeLayout({ children }) {
+function EmployeeLayout({ children, title = 'Employee Dashboard', subtitle = 'Individual Performance & Workspace' }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const session = getSession()
   const avatar = (session?.user?.name || 'Employee')
@@ -88,8 +88,8 @@ function EmployeeLayout({ children }) {
       <EmployeeRail menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((open) => !open)} />
       <section className="employee-main">
         <Topbar
-          title="Employee Dashboard"
-          subtitle="Individual Performance & Workspace"
+          title={title}
+          subtitle={subtitle}
           avatar={avatar}
           employee
           menuOpen={menuOpen}

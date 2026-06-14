@@ -29,7 +29,7 @@ function Topbar({ title, subtitle, avatar = 'SA', employee = false, onMenuClick,
 
   const handleProfile = () => {
     setAccountOpen(false)
-    navigate(session?.user?.role === 'employee' ? '/employee/dashboard' : '/admin/profile')
+    navigate(session?.user?.role === 'employee' ? '/employee/profile' : '/admin/profile')
   }
 
   return (

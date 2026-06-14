@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AdminLayout from '../components/dashboard/AdminLayout'
+import EmployeeLayout from '../components/employee/EmployeeLayout'
 import Icon from '../components/icons/Icon'
 import { changeMyPassword, getSession, saveSession, updateMyProfile } from '../lib/api'
 
@@ -8,7 +9,7 @@ function initials(name = 'User') {
   return name.split(' ').map((part) => part[0]).join('').slice(0, 2).toUpperCase()
 }
 
-function AdminProfilePage() {
+function AdminProfilePage({ employee = false }) {
   const navigate = useNavigate()
   const [profileForm, setProfileForm] = useState({
     name: '',
@@ -93,8 +94,7 @@ function AdminProfilePage() {
     }
   }
 
-  return (
-    <AdminLayout>
+  const content = (
       <div className="admin-account-page profile-page">
         <header className="admin-page-head">
           <div>
@@ -188,6 +188,15 @@ function AdminProfilePage() {
           </form>
         </section>
       </div>
+  )
+
+  return employee ? (
+    <EmployeeLayout title="My Profile" subtitle="Account Settings & Password">
+      {content}
+    </EmployeeLayout>
+  ) : (
+    <AdminLayout>
+      {content}
     </AdminLayout>
   )
 }
