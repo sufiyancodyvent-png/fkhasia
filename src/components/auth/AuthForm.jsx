@@ -107,6 +107,26 @@ function AuthForm({ mode = 'login' }) {
           <Icon name="arrowRight" size={22} />
         </button>
       </form>
+
+      {!isRegister && (
+        <section className="bank-association" aria-label="Bank associations">
+          <p>In Association With Multiple Banks</p>
+          <div className="bank-logo-row">
+            <span className="bank-logo">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_Habib_Bank.svg" alt="HBL" />
+            </span>
+            <span className="bank-logo">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/United_Bank_Limited_logo.svg" alt="UBL" />
+            </span>
+            <span className="bank-logo">
+              <img src="https://www.meezanbank.com/wp-content/themes/mbl/images/logo.png" alt="Meezan Bank" />
+            </span>
+            <span className="bank-logo">
+              <img src="https://www.mcb.com.pk/assets/images/mcb-logo.svg" alt="MCB Bank" />
+            </span>
+          </div>
+        </section>
+      )}
     </section>
   )
 }
