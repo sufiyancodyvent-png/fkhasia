@@ -6,13 +6,17 @@ import AdminAttendanceSettingsPage from './pages/AdminAttendanceSettingsPage'
 import AdminDepartmentsPage from './pages/AdminDepartmentsPage'
 import AdminEmployeesPage from './pages/AdminEmployeesPage'
 import AdminProfilePage from './pages/AdminProfilePage'
+import AdminLiveUsersPage from './pages/AdminLiveUsersPage'
 import AuthPage from './pages/AuthPage'
 import EmployeeAttendancePage from './pages/EmployeeAttendancePage'
 import EmployeeDashboardPage from './pages/EmployeeDashboardPage'
+import usePresenceHeartbeat from './hooks/usePresenceHeartbeat'
 import './App.css'
 import './employee-final.css'
 
 function App() {
+  usePresenceHeartbeat()
+
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" replace />} />
@@ -28,6 +32,7 @@ function App() {
       <Route path="/admin/profile" element={<AdminProfilePage />} />
       <Route path="/admin/departments" element={<AdminDepartmentsPage />} />
       <Route path="/admin/employees" element={<AdminEmployeesPage />} />
+      <Route path="/admin/live-users" element={<AdminLiveUsersPage />} />
       <Route path="/admin/attendance" element={<AdminAttendancePage />} />
       <Route path="/admin/attendance/approvals" element={<AdminAttendanceApprovalsPage />} />
       <Route path="/admin/attendance/settings" element={<AdminAttendanceSettingsPage />} />

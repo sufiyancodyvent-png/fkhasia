@@ -5,6 +5,7 @@ import Icon from '../icons/Icon'
 const railItems = [
   { key: 'dashboard', icon: 'grid', label: 'Dashboard', path: '/admin' },
   { key: 'hr', icon: 'userCheck', label: 'Employee Directory', path: '/admin/employees', section: 'hr' },
+  { key: 'live', icon: 'users', label: 'Live Users', path: '/admin/live-users', section: 'system' },
   { key: 'attendance', icon: 'clock', label: 'Attendance', path: '/admin/attendance', section: 'attendance' },
 ]
 
@@ -24,13 +25,17 @@ function Sidebar({ menuOpen, onOpenMenu, onToggleMenu }) {
   const { pathname } = useLocation()
   const hrActive = pathname.startsWith('/admin/departments') || pathname.startsWith('/admin/employees')
   const attendanceActive = pathname.startsWith('/admin/attendance')
+  const liveActive = pathname.startsWith('/admin/live-users')
   const visibleSection = hrActive ? 'hr' : attendanceActive ? 'attendance' : 'system'
-  const activeRailKey = hrActive ? 'hr' : attendanceActive ? 'attendance' : 'dashboard'
+  const activeRailKey = hrActive ? 'hr' : attendanceActive ? 'attendance' : liveActive ? 'live' : 'dashboard'
   const expandedItems = visibleSection === 'hr'
       ? hrItems
       : visibleSection === 'attendance'
         ? attendanceItems
-        : [{ icon: 'trending', label: 'Dashboard', path: '/admin' }]
+        : [
+            { icon: 'trending', label: 'Dashboard', path: '/admin' },
+            { icon: 'users', label: 'Live Users', path: '/admin/live-users' },
+          ]
   const sectionLabel = visibleSection === 'hr'
       ? 'HUMAN RESOURCE MANAGEMENT'
       : visibleSection === 'attendance'

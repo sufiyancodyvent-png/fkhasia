@@ -16,6 +16,354 @@
   --shadow-soft: 0 8px 18px rgba(18, 30, 56, 0.07);
 }
 
+.live-users-page {
+  display: grid;
+  gap: 22px;
+}
+
+.live-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.live-summary-card {
+  display: grid;
+  min-height: 118px;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.live-summary-card svg {
+  grid-row: span 2;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.live-summary-card span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.live-summary-card strong {
+  color: var(--ink);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.live-summary-card.online svg {
+  color: #087a4b;
+  background: #dcfce7;
+}
+
+.live-summary-card.idle svg {
+  color: #9a5b00;
+  background: #fef3c7;
+}
+
+.live-summary-card.offline svg {
+  color: #9f1239;
+  background: #ffe4e6;
+}
+
+.live-user-filters {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(180px, 240px);
+  gap: 14px;
+}
+
+.live-users-card {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.live-user-row {
+  display: grid;
+  grid-template-columns: minmax(230px, 1.35fr) 110px minmax(160px, 1fr) minmax(145px, 0.8fr) 130px;
+  align-items: center;
+  gap: 14px;
+  min-height: 78px;
+  padding: 14px 18px;
+  border-top: 1px solid #edf1f7;
+}
+
+.live-user-row.header {
+  min-height: 48px;
+  border-top: 0;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.live-user-person {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+}
+
+.live-user-person > span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  place-items: center;
+  border-radius: 8px;
+  color: #fff;
+  background: #081a38;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.live-user-person div,
+.live-time {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.live-user-person strong,
+.live-time strong {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.live-user-person small,
+.live-time small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.live-status {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.live-status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.live-status.online {
+  color: #087a4b;
+  background: #dcfce7;
+}
+
+.live-status.idle {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.live-status.offline {
+  color: #9f1239;
+  background: #ffe4e6;
+}
+
+.live-path {
+  overflow: hidden;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.live-message-button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: #2563eb;
+  font-weight: 900;
+}
+
+.live-user-empty {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.live-user-empty strong {
+  color: var(--ink);
+}
+
+.live-message-modal textarea {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--ink);
+  background: #f8fafc;
+}
+
+.notification-wrap {
+  position: relative;
+}
+
+.notification-trigger {
+  position: relative;
+}
+
+.notification-trigger > span {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: grid;
+  min-width: 19px;
+  height: 19px;
+  place-items: center;
+  padding: 0 5px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  color: #fff;
+  background: #ed2b5b;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 40;
+  width: min(360px, calc(100vw - 28px));
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
+}
+
+.notification-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.notification-head strong {
+  color: var(--ink);
+}
+
+.notification-head span,
+.message-preview span,
+.notification-empty {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.notification-list {
+  display: grid;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.message-preview {
+  display: grid;
+  gap: 5px;
+  padding: 13px 16px;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.message-preview.unread {
+  background: #eff6ff;
+}
+
+.message-preview strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.message-preview p {
+  margin: 0;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.notification-empty {
+  margin: 0;
+  padding: 18px 16px;
+}
+
+@media (max-width: 980px) {
+  .live-summary-grid,
+  .live-user-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .live-users-card {
+    gap: 12px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .live-user-row.header {
+    display: none;
+  }
+
+  .live-user-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .live-message-button {
+    width: 100%;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

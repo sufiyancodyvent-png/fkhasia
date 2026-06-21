@@ -1,8 +1,10 @@
 import express from 'express'
+import crypto from 'crypto'
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { signToken } from '../utils/tokens.js'
 import { requireAuth } from '../middleware/auth.js'
 import { User } from '../models/User.js'
+import { UserSession } from '../models/UserSession.js'
 
 const router = express.Router()
 
@@ -38,10 +40,31 @@ router.post('/login', asyncHandler(async (req, res) => {
   user.lastLoginAt = new Date()
   await user.save()
 
+  const session = await UserSession.create({
+    user: user._id,
+    tokenId: crypto.randomUUID(),
+    userAgent: String(req.headers['user-agent'] || '').slice(0, 300),
+    ipAddress: req.ip || '',
+    lastSeenAt: new Date(),
+    currentPath: '/login',
+  })
+
   res.json({
-    token: signToken(user),
+    token: signToken(user, session.tokenId),
+    sessionId: session._id.toString(),
     user: publicUser(user),
   })
+}))
+
+router.post('/logout', requireAuth, asyncHandler(async (req, res) => {
+  if (req.session) {
+    req.session.status = 'logged_out'
+    req.session.logoutAt = new Date()
+    req.session.lastSeenAt = new Date()
+    await req.session.save()
+  }
+
+  res.json({ ok: true })
 }))
 
 router.get('/me', requireAuth, (req, res) => {

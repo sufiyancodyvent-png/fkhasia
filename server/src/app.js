@@ -11,6 +11,8 @@ import authRoutes from './routes/authRoutes.js'
 import attendanceRoutes from './routes/attendanceRoutes.js'
 import dashboardRoutes from './routes/dashboardRoutes.js'
 import departmentRoutes from './routes/departmentRoutes.js'
+import messageRoutes from './routes/messageRoutes.js'
+import presenceRoutes from './routes/presenceRoutes.js'
 import settingsRoutes from './routes/settingsRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import { errorHandler, notFound } from './middleware/errorHandler.js'
@@ -64,6 +66,8 @@ app.use('/api/auth', authRoutes)
 app.use('/api/attendance', attendanceRoutes)
 app.use('/api/dashboard', dashboardRoutes)
 app.use('/api/departments', departmentRoutes)
+app.use('/api/messages', messageRoutes)
+app.use('/api/presence', presenceRoutes)
 app.use('/api/settings', settingsRoutes)
 app.use('/api/users', userRoutes)
 

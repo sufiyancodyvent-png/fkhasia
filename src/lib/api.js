@@ -47,6 +47,40 @@ export function login(email, password) {
   })
 }
 
+export function logout() {
+  return apiRequest('/auth/logout', {
+    method: 'POST',
+  })
+}
+
+export function sendPresenceHeartbeat(path) {
+  return apiRequest('/presence/heartbeat', {
+    method: 'POST',
+    body: JSON.stringify({ path }),
+  })
+}
+
+export function getLiveSessions() {
+  return apiRequest('/presence/sessions')
+}
+
+export function getMyMessages() {
+  return apiRequest('/messages/mine')
+}
+
+export function sendMessage(to, body) {
+  return apiRequest('/messages', {
+    method: 'POST',
+    body: JSON.stringify({ to, body }),
+  })
+}
+
+export function markMessageRead(id) {
+  return apiRequest(`/messages/${id}/read`, {
+    method: 'PATCH',
+  })
+}
+
 export function updateMyProfile(payload) {
   return apiRequest('/auth/me', {
     method: 'PATCH',
