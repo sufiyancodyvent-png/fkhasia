@@ -109,7 +109,8 @@ function AdminSupportDashboardPage() {
   // No modal helpers needed
 
   return (
-    <div className="support-dashboard-container" style={{ minHeight: '100vh', width: '100%', margin: 0, padding: '24px', boxSizing: 'border-box', backgroundColor: '#071c24' }}>
+    <AdminLayout>
+      <div className="support-dashboard-container">
         {error && <p className="page-error">{error}</p>}
         {loading && !data ? (
           <PageLoader label="Loading support dashboard..." />
@@ -932,7 +933,8 @@ function AdminSupportDashboardPage() {
             </section>
           </>
         )}
-    </div>
+      </div>
+    </AdminLayout>
   )
 }
 

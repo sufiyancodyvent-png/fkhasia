@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import PageLoader from '../components/ui/PageLoader'
+import AdminLayout from '../components/dashboard/AdminLayout'
 import { getSession, getSupportTicket, assignSupportTicket, getUsers } from '../lib/api'
 
 function AssignSupportTicketPage() {
@@ -80,18 +81,16 @@ function AssignSupportTicketPage() {
   }
 
   return (
-    <div className="support-dashboard-container" style={{
-      minHeight: '100vh',
-      width: '100%',
-      margin: 0,
-      padding: '24px',
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#071c24',
-    }}>
+    <AdminLayout>
+      <div className="support-dashboard-container" style={{
+        minHeight: 'calc(100vh - 62px)',
+        padding: '1.5rem 1rem',
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <div style={{
         width: '100%',
         maxWidth: '550px',
@@ -264,6 +263,7 @@ function AssignSupportTicketPage() {
         </form>
       </div>
     </div>
+  </AdminLayout>
   )
 }
 
