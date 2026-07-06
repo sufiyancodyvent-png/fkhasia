@@ -20,16 +20,7 @@ function AdminSupportDashboardPage() {
   const [ticketsLoading, setTicketsLoading] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [assigningTicketId, setAssigningTicketId] = useState(null)
-  const [agents, setAgents] = useState([])
-  const [agentsLoading, setAgentsLoading] = useState(false)
-  const [assignmentModalOpen, setAssignmentModalOpen] = useState(false)
-  const [selectedTicketForAssignment, setSelectedTicketForAssignment] = useState(null)
-  const [selectedAgent, setSelectedAgent] = useState('')
-  const [assignmentLoading, setAssignmentLoading] = useState(false)
-  const [assignmentError, setAssignmentError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
-  const [agentDropdownOpen, setAgentDropdownOpen] = useState(false)
 
   // Tabs and pagination states
   const [activeTab, setActiveTab] = useState('unassigned') // 'unassigned', 'open', 'solved'
@@ -64,17 +55,10 @@ function AdminSupportDashboardPage() {
         setLoading(true)
         const dashboardData = await getSupportTeamDashboard()
         setData(dashboardData)
-
-        // Fetch support agents for assignment dropdown
-        setAgentsLoading(true)
-        const usersData = await getUsers()
-        const supportAgents = usersData.users.filter(user => user.role === 'employee')
-        setAgents(supportAgents)
       } catch (err) {
         setError(err.message)
       } finally {
         setLoading(false)
-        setAgentsLoading(false)
       }
     }
 
@@ -122,70 +106,7 @@ function AdminSupportDashboardPage() {
     return circumference * (1 - fraction)
   }
 
-  // Open assignment modal for a specific ticket
-  const handleOpenAssignmentModal = (ticket) => {
-    setSelectedTicketForAssignment(ticket)
-    setSelectedAgent('')
-    setAssignmentError('')
-    setAssignmentModalOpen(true)
-  }
-
-  // Close assignment modal
-  const handleCloseAssignmentModal = () => {
-    setAssignmentModalOpen(false)
-    setSelectedTicketForAssignment(null)
-    setSelectedAgent('')
-    setAssignmentError('')
-    setAgentDropdownOpen(false)
-  }
-
-  // Handle ticket assignment
-  const handleAssignTicket = async () => {
-    if (!selectedAgent) {
-      setAssignmentError('Please select an agent')
-      return
-    }
-
-    try {
-      setAssignmentLoading(true)
-      setAssignmentError('')
-
-      // Call the assignment API
-      await assignSupportTicket(selectedTicketForAssignment._id, selectedAgent)
-
-      // Refresh tickets list
-      await loadTickets()
-
-      // Show success message
-      setSuccessMessage(`Ticket assigned successfully to ${agents.find(a => a._id === selectedAgent)?.name || 'agent'}`)
-
-      // Refresh dashboard data
-      const updatedData = await getSupportTeamDashboard()
-      setData(updatedData)
-
-      // Close modal
-      handleCloseAssignmentModal()
-
-      // Hide success message after 3 seconds
-      setTimeout(() => setSuccessMessage(''), 3000)
-    } catch (err) {
-      setAssignmentError(err.message || 'Failed to assign ticket')
-    } finally {
-      setAssignmentLoading(false)
-    }
-  }
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (agentDropdownOpen && !e.target.closest('[data-dropdown="agent"]')) {
-        setAgentDropdownOpen(false)
-      }
-    }
-
-    document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
-  }, [agentDropdownOpen])
+  // No modal helpers needed
 
   return (
     <div className="support-dashboard-container" style={{ minHeight: '100vh', width: '100%', margin: 0, padding: '24px', boxSizing: 'border-box', backgroundColor: '#071c24' }}>
@@ -828,7 +749,7 @@ function AdminSupportDashboardPage() {
                                 textAlign: 'center',
                               }}>
                                 <button
-                                  onClick={() => handleOpenAssignmentModal(ticket)}
+                                  onClick={() => navigate(`/admin/support/assign-ticket/${ticket._id}`)}
                                   style={{
                                     padding: '0.5rem 1rem',
                                     backgroundColor: '#2ec4b6',
@@ -872,7 +793,7 @@ function AdminSupportDashboardPage() {
                                 textAlign: 'center',
                               }}>
                                 <button
-                                  onClick={() => handleOpenAssignmentModal(ticket)}
+                                  onClick={() => navigate(`/admin/support/assign-ticket/${ticket._id}`)}
                                   style={{
                                     padding: '0.5rem 1rem',
                                     backgroundColor: '#3498db',
@@ -1007,275 +928,7 @@ function AdminSupportDashboardPage() {
                 </div>
               )}
 
-              {/* Assignment Modal */}
-              {assignmentModalOpen && (
-                <div style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 1000,
-                }}>
-                  <div style={{
-                    backgroundColor: '#1a1a2e',
-                    borderRadius: '12px',
-                    padding: '2rem',
-                    maxWidth: '400px',
-                    width: '90%',
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    maxHeight: '90vh',
-                    overflowY: 'auto',
-                    position: 'relative',
-                  }}>
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      marginBottom: '1.5rem',
-                    }}>
-                      <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '600' }}>
-                        Assign Ticket
-                      </h3>
-                      <button
-                        onClick={handleCloseAssignmentModal}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          color: 'rgba(255, 255, 255, 0.6)',
-                          fontSize: '1.5rem',
-                          cursor: 'pointer',
-                          padding: 0,
-                        }}
-                      >
-                        ×
-                      </button>
-                    </div>
-
-                    {selectedTicketForAssignment && (
-                      <div style={{
-                        marginBottom: '1.5rem',
-                        padding: '1rem',
-                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                        borderRadius: '6px',
-                      }}>
-                        <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
-                          Ticket Subject:
-                        </p>
-                        <p style={{
-                          margin: 0,
-                          fontSize: '0.95rem',
-                          fontWeight: '500',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                        }}>
-                          {selectedTicketForAssignment.subject}
-                        </p>
-                      </div>
-                    )}
-
-                    {assignmentError && (
-                      <div style={{
-                        marginBottom: '1rem',
-                        padding: '0.75rem',
-                        backgroundColor: 'rgba(231, 76, 60, 0.15)',
-                        border: '1px solid rgba(231, 76, 60, 0.3)',
-                        borderRadius: '6px',
-                        color: '#e74c3c',
-                        fontSize: '0.875rem',
-                      }}>
-                        {assignmentError}
-                      </div>
-                    )}
-
-                    <div style={{ marginBottom: '1.5rem' }}>
-                      <label style={{
-                        display: 'block',
-                        marginBottom: '0.5rem',
-                        fontSize: '0.875rem',
-                        fontWeight: '600',
-                        color: 'rgba(255, 255, 255, 0.8)',
-                      }}>
-                        Select Agent
-                      </label>
-                      {agentsLoading ? (
-                        <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
-                          Loading agents...
-                        </p>
-                      ) : (
-                        <div style={{ position: 'relative', zIndex: 10 }} data-dropdown="agent">
-                          {/* Custom Dropdown Button */}
-                          <button
-                            type="button"
-                            onClick={() => setAgentDropdownOpen(!agentDropdownOpen)}
-                            style={{
-                              width: '100%',
-                              padding: '0.75rem',
-                              backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                              color: selectedAgent ? '#fff' : 'rgba(255, 255, 255, 0.5)',
-                              border: '1px solid rgba(255, 255, 255, 0.1)',
-                              borderRadius: '6px',
-                              fontSize: '0.875rem',
-                              cursor: 'pointer',
-                              textAlign: 'left',
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              transition: 'all 0.2s',
-                            }}
-                          >
-                            <span>
-                              {selectedAgent
-                                ? agents.find(a => a._id === selectedAgent)?.name
-                                : '-- Select an agent --'}
-                            </span>
-                            <span style={{ fontSize: '1rem', opacity: 0.6 }}>
-                              {agentDropdownOpen ? '▲' : '▼'}
-                            </span>
-                          </button>
-
-                          {/* Custom Dropdown Options */}
-                          {agentDropdownOpen && (
-                            <div style={{
-                              position: 'absolute',
-                              top: 'calc(100% + 0.25rem)',
-                              left: 0,
-                              right: 0,
-                              backgroundColor: '#16213e',
-                              border: '1px solid rgba(255, 255, 255, 0.15)',
-                              borderRadius: '6px',
-                              zIndex: 99999,
-                              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
-                              overflow: 'hidden',
-                            }}>
-                              {agents.length === 0 ? (
-                                <div style={{
-                                  padding: '1rem',
-                                  color: 'rgba(255, 255, 255, 0.5)',
-                                  fontSize: '0.875rem',
-                                  textAlign: 'center',
-                                }}>
-                                  No agents available
-                                </div>
-                              ) : (
-                                <ul style={{
-                                  listStyle: 'none',
-                                  margin: 0,
-                                  padding: 0,
-                                  maxHeight: '200px',
-                                  overflowY: 'auto',
-                                }}>
-                                  {agents.map((agent, index) => (
-                                    <li key={agent._id}>
-                                      <button
-                                        type="button"
-                                        onClick={() => {
-                                          setSelectedAgent(agent._id)
-                                          setAgentDropdownOpen(false)
-                                          setAssignmentError('')
-                                        }}
-                                        style={{
-                                          width: '100%',
-                                          padding: '0.75rem 1rem',
-                                          backgroundColor:
-                                            selectedAgent === agent._id
-                                              ? 'rgba(46, 196, 182, 0.2)'
-                                              : index % 2 === 0
-                                                ? 'transparent'
-                                                : 'rgba(255, 255, 255, 0.02)',
-                                          color: selectedAgent === agent._id ? '#2ec4b6' : '#fff',
-                                          border: 'none',
-                                          cursor: 'pointer',
-                                          textAlign: 'left',
-                                          fontSize: '0.875rem',
-                                          transition: 'all 0.15s',
-                                          borderBottom:
-                                            index < agents.length - 1
-                                              ? '1px solid rgba(255, 255, 255, 0.05)'
-                                              : 'none',
-                                        }}
-                                        onMouseEnter={(e) => {
-                                          if (selectedAgent !== agent._id) {
-                                            e.target.style.backgroundColor = 'rgba(46, 196, 182, 0.1)'
-                                          }
-                                        }}
-                                        onMouseLeave={(e) => {
-                                          if (selectedAgent !== agent._id) {
-                                            e.target.style.backgroundColor =
-                                              index % 2 === 0
-                                                ? 'transparent'
-                                                : 'rgba(255, 255, 255, 0.02)'
-                                          }
-                                        }}
-                                      >
-                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                          <span style={{ fontWeight: selectedAgent === agent._id ? '600' : '400' }}>
-                                            {agent.name}
-                                          </span>
-                                          <span style={{ fontSize: '0.75rem', opacity: 0.6 }}>
-                                            {agent.profile?.designation || 'Employee'}
-                                          </span>
-                                        </div>
-                                      </button>
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-
-                    <div style={{
-                      display: 'flex',
-                      gap: '0.75rem',
-                      justifyContent: 'flex-end',
-                    }}>
-                      <button
-                        onClick={handleCloseAssignmentModal}
-                        disabled={assignmentLoading}
-                        style={{
-                          padding: '0.75rem 1.5rem',
-                          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                          color: '#fff',
-                          border: '1px solid rgba(255, 255, 255, 0.2)',
-                          borderRadius: '6px',
-                          cursor: assignmentLoading ? 'not-allowed' : 'pointer',
-                          fontSize: '0.875rem',
-                          fontWeight: '600',
-                          opacity: assignmentLoading ? 0.5 : 1,
-                        }}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handleAssignTicket}
-                        disabled={assignmentLoading || !selectedAgent}
-                        style={{
-                          padding: '0.75rem 1.5rem',
-                          backgroundColor: '#2ec4b6',
-                          color: '#fff',
-                          border: 'none',
-                          borderRadius: '6px',
-                          cursor: assignmentLoading || !selectedAgent ? 'not-allowed' : 'pointer',
-                          fontSize: '0.875rem',
-                          fontWeight: '600',
-                          opacity: assignmentLoading || !selectedAgent ? 0.6 : 1,
-                        }}
-                      >
-                        {assignmentLoading ? 'Assigning...' : 'Assign Ticket'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {/* No modal JSX needed */}
             </section>
           </>
         )}

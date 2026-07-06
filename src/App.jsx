@@ -9,6 +9,7 @@ import AdminProfilePage from './pages/AdminProfilePage'
 import AdminLiveUsersPage from './pages/AdminLiveUsersPage'
 import AdminSupportDashboardPage from './pages/AdminSupportDashboardPage'
 import CreateSupportTicketPage from './pages/CreateSupportTicketPage'
+import AssignSupportTicketPage from './pages/AssignSupportTicketPage'
 import AuthPage from './pages/AuthPage'
 import EmployeeAttendancePage from './pages/EmployeeAttendancePage'
 import EmployeeDashboardPage from './pages/EmployeeDashboardPage'
@@ -41,6 +42,7 @@ function App() {
       <Route path="/admin/attendance/settings" element={<AdminAttendanceSettingsPage />} />
       <Route path="/admin/support-dashboard" element={<AdminSupportDashboardPage />} />
       <Route path="/admin/support/create-ticket" element={<CreateSupportTicketPage />} />
+      <Route path="/admin/support/assign-ticket/:id" element={<AssignSupportTicketPage />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   )
