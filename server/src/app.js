@@ -14,6 +14,7 @@ import departmentRoutes from './routes/departmentRoutes.js'
 import messageRoutes from './routes/messageRoutes.js'
 import presenceRoutes from './routes/presenceRoutes.js'
 import settingsRoutes from './routes/settingsRoutes.js'
+import supportRoutes from './routes/supportRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import { errorHandler, notFound } from './middleware/errorHandler.js'
 
@@ -69,6 +70,7 @@ app.use('/api/departments', departmentRoutes)
 app.use('/api/messages', messageRoutes)
 app.use('/api/presence', presenceRoutes)
 app.use('/api/settings', settingsRoutes)
+app.use('/api/support', supportRoutes)
 app.use('/api/users', userRoutes)
 
 const distDir = path.join(rootDir, 'dist')

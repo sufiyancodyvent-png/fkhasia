@@ -208,3 +208,61 @@ export function deleteDepartment(id) {
     method: 'DELETE',
   })
 }
+
+export function getSupportTeamDashboard() {
+  return apiRequest('/dashboard/support-team')
+}
+
+// Support Tickets API
+export function getSupportTickets(filters = {}) {
+  const params = new URLSearchParams()
+  if (filters.status) params.append('status', filters.status)
+  if (filters.category) params.append('category', filters.category)
+  if (filters.assignedTo) params.append('assignedTo', filters.assignedTo)
+  if (filters.page) params.append('page', filters.page)
+  if (filters.limit) params.append('limit', filters.limit)
+  if (filters.sort) params.append('sort', filters.sort)
+
+  const queryString = params.toString()
+  return apiRequest(`/support${queryString ? '?' + queryString : ''}`)
+}
+
+export function getSupportTicket(id) {
+  return apiRequest(`/support/${id}`)
+}
+
+export function createSupportTicket(payload) {
+  return apiRequest('/support', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function updateSupportTicket(id, payload) {
+  return apiRequest(`/support/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function assignSupportTicket(id, assignedTo) {
+  return apiRequest(`/support/${id}/assign`, {
+    method: 'PATCH',
+    body: JSON.stringify({ assignedTo }),
+  })
+}
+
+export function resolveSupportTicket(id, payload = {}) {
+  return apiRequest(`/support/${id}/resolve`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function deleteSupportTicket(id) {
+  return apiRequest(`/support/${id}`, {
+    method: 'DELETE',
+  })
+}
+
+

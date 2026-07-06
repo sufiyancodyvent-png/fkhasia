@@ -1,0 +1,409 @@
+/* Support Team Performance Dashboard Styles */
+
+.support-dashboard-container {
+  background-color: #071c24;
+  color: #e2f1f5;
+  min-height: calc(100vh - 70px);
+  padding: 24px;
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header */
+.support-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 16px;
+}
+
+.support-dashboard-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.support-dashboard-header .logo-mark {
+  background-color: #00adb5;
+  color: #071c24;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.support-dashboard-filter {
+  display: flex;
+  align-items: center;
+  background-color: #0c2b36;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  gap: 8px;
+  font-size: 13px;
+  color: #a3c2cb;
+}
+
+.support-dashboard-filter svg {
+  color: #00adb5;
+}
+
+/* Main Grid Layout */
+.support-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+@media (max-width: 1200px) {
+  .support-dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .support-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Column Flex Containers */
+.support-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Card Styling */
+.support-card {
+  background-color: #0c2b36;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.support-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #a3c2cb;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Ticket Count Grid (2x2) */
+.ticket-counts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ticket-count-tile {
+  background-color: #09222b;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-height: 100px;
+}
+
+.ticket-count-tile .tile-label {
+  font-size: 13px;
+  color: #7fa1ab;
+  font-weight: 600;
+}
+
+.ticket-count-tile .tile-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: #39b8d2;
+}
+
+.ticket-count-tile.escalated .tile-value {
+  color: #ff5e7e;
+}
+
+.ticket-count-tile.solved .tile-value {
+  color: #2ec4b6;
+}
+
+/* Gauge Chart Layouts */
+.gauge-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.gauge-svg {
+  width: 160px;
+  height: 160px;
+}
+
+.gauge-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 14;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke-width: 14;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+/* Gauge Color Variations */
+.gauge-fill.cyan {
+  stroke: #00adb5;
+}
+
+.gauge-fill.green-yellow-red {
+  /* Dynamic gradient via SVG config */
+}
+
+/* Needle Guages */
+.gauge-needle {
+  transform-origin: 80px 80px;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  fill: #e2f1f5;
+}
+
+.gauge-center-dot {
+  fill: #0c2b36;
+  stroke: #e2f1f5;
+  stroke-width: 3;
+}
+
+.gauge-value-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gauge-value-overlay strong {
+  font-size: 36px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.gauge-value-overlay span {
+  font-size: 11px;
+  color: #7fa1ab;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Range Label for Occupancy */
+.gauge-range-label {
+  font-size: 12px;
+  color: #7fa1ab;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Category Breakdown Progress Bars */
+.category-breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.category-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.category-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.category-name {
+  color: #a3c2cb;
+}
+
+.category-value {
+  color: #ffffff;
+}
+
+.category-progress-bg {
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.category-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease-in-out;
+}
+
+/* Progress Fill Colors */
+.progress-blue { background-color: #38bdf8; }
+.progress-teal { background-color: #2ec4b6; }
+.progress-orange { background-color: #f39c12; }
+.progress-red { background-color: #ff5e7e; }
+
+/* NPS breakdown pills */
+.nps-legend-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+  width: 100%;
+}
+
+.nps-legend-item {
+  display: flex;
+  align-items: center;
+  background-color: #09222b;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  gap: 12px;
+}
+
+.nps-legend-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 24px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+.nps-legend-badge.promoter { background-color: #2ec4b6; }
+.nps-legend-badge.passive { background-color: #f39c12; }
+.nps-legend-badge.detractor { background-color: #ff5e7e; }
+
+.nps-legend-text {
+  color: #a3c2cb;
+}
+
+/* Top Agents List */
+.top-agents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.agent-row-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #09222b;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.agent-row-card:hover {
+  transform: translateY(-2px);
+  background-color: #0e3442;
+}
+
+.agent-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.agent-avatar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #00adb5;
+  background-color: #0c2b36;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #00adb5;
+}
+
+.agent-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.agent-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.agent-stats {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  color: #7fa1ab;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+
+.agent-stats strong {
+  color: #ffffff;
+}
+
+.agent-satisfaction-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 173, 181, 0.1);
+  border: 1px solid rgba(0, 173, 181, 0.2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  min-width: 90px;
+  text-align: center;
+}
+
+.agent-satisfaction-badge strong {
+  font-size: 14px;
+  color: #00adb5;
+  font-weight: 800;
+}
+
+.agent-satisfaction-badge span {
+  font-size: 8px;
+  color: #7fa1ab;
+  text-transform: uppercase;
+  font-weight: 700;
+}

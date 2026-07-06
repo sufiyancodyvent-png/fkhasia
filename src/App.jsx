@@ -7,12 +7,15 @@ import AdminDepartmentsPage from './pages/AdminDepartmentsPage'
 import AdminEmployeesPage from './pages/AdminEmployeesPage'
 import AdminProfilePage from './pages/AdminProfilePage'
 import AdminLiveUsersPage from './pages/AdminLiveUsersPage'
+import AdminSupportDashboardPage from './pages/AdminSupportDashboardPage'
+import CreateSupportTicketPage from './pages/CreateSupportTicketPage'
 import AuthPage from './pages/AuthPage'
 import EmployeeAttendancePage from './pages/EmployeeAttendancePage'
 import EmployeeDashboardPage from './pages/EmployeeDashboardPage'
 import usePresenceHeartbeat from './hooks/usePresenceHeartbeat'
 import './App.css'
 import './employee-final.css'
+import './support-dashboard.css'
 
 function App() {
   usePresenceHeartbeat()
@@ -36,6 +39,8 @@ function App() {
       <Route path="/admin/attendance" element={<AdminAttendancePage />} />
       <Route path="/admin/attendance/approvals" element={<AdminAttendanceApprovalsPage />} />
       <Route path="/admin/attendance/settings" element={<AdminAttendanceSettingsPage />} />
+      <Route path="/admin/support-dashboard" element={<AdminSupportDashboardPage />} />
+      <Route path="/admin/support/create-ticket" element={<CreateSupportTicketPage />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   )

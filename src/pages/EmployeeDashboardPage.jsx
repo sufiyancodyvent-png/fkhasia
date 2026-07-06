@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import EmployeeLayout from '../components/employee/EmployeeLayout'
 import Icon from '../components/icons/Icon'
 import PageLoader from '../components/ui/PageLoader'
-import { clockIn, clockOut, endBreak, getEmployeeDashboard, getSession, startBreak, updateDailyNote } from '../lib/api'
+import { clockIn, clockOut, endBreak, getEmployeeDashboard, getSession, startBreak, updateDailyNote, getSupportTickets, resolveSupportTicket } from '../lib/api'
 import { formatClockTime, formatShiftRange } from '../lib/time'
 
 function formatDate(value) {
@@ -78,20 +78,41 @@ function EmployeeDashboardPage() {
   const [now, setNow] = useState(() => Date.now())
   const [error, setError] = useState('')
 
+  // Assigned support tickets states
+  const [tickets, setTickets] = useState([])
+  const [ticketsLoading, setTicketsLoading] = useState(false)
+  const [resolveModalOpen, setResolveModalOpen] = useState(false)
+  const [selectedTicketForResolve, setSelectedTicketForResolve] = useState(null)
+  const [satisfactionRating, setSatisfactionRating] = useState(10)
+  const [firstContactResolved, setFirstContactResolved] = useState(true)
+  const [resolvingLoading, setResolvingLoading] = useState(false)
+
   const loadDashboard = useCallback(async () => {
     try {
-      if (!getSession()) {
+      const session = getSession()
+      if (!session) {
         navigate('/login')
         return
       }
 
       setLoading(true)
-      setData(await getEmployeeDashboard())
+      const dashboardData = await getEmployeeDashboard()
+      setData(dashboardData)
+
+      // Fetch assigned support tickets (status: 'open')
+      setTicketsLoading(true)
+      const ticketsData = await getSupportTickets({
+        assignedTo: session.user._id,
+        status: 'open',
+        sort: '-updatedAt',
+      })
+      setTickets(ticketsData.tickets || [])
     } catch (err) {
       setError(err.message)
       if (/auth|session|token/i.test(err.message)) navigate('/login')
     } finally {
       setLoading(false)
+      setTicketsLoading(false)
     }
   }, [navigate])
 
@@ -197,6 +218,24 @@ function EmployeeDashboardPage() {
     link.click()
     link.remove()
     URL.revokeObjectURL(url)
+  }
+
+  const handleResolveTicket = async () => {
+    try {
+      setResolvingLoading(true)
+      setError('')
+      await resolveSupportTicket(selectedTicketForResolve._id, {
+        satisfactionRating,
+        firstContactResolved,
+      })
+      setResolveModalOpen(false)
+      setSelectedTicketForResolve(null)
+      await loadDashboard()
+    } catch (err) {
+      setError(err.message || 'Failed to resolve ticket')
+    } finally {
+      setResolvingLoading(false)
+    }
   }
 
   const settings = data?.settings || {}
@@ -342,6 +381,85 @@ function EmployeeDashboardPage() {
           ))}
         </section>
 
+        {/* Assigned Support Tickets Section */}
+        <article className="edb-log-card" style={{ marginBottom: '2rem' }}>
+          <div className="edb-log-head">
+            <h2>Assigned Support Tickets <span>ACTIVE</span></h2>
+          </div>
+
+          <div className="edb-table-wrap">
+            {ticketsLoading ? (
+              <p style={{ padding: '2rem', textAlign: 'center', color: 'var(--muted)' }}>Loading tickets...</p>
+            ) : tickets.length > 0 ? (
+              <table className="edb-log-table">
+                <thead>
+                  <tr>
+                    <th>SUBJECT</th>
+                    <th>CATEGORY</th>
+                    <th>ASSIGNED DATE</th>
+                    <th style={{ textAlign: 'center' }}>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tickets.map((ticket) => (
+                    <tr key={ticket._id}>
+                      <td>{ticket.subject}</td>
+                      <td>
+                        <span style={{
+                          padding: '0.25rem 0.75rem',
+                          borderRadius: '4px',
+                          backgroundColor: 'rgba(46, 196, 182, 0.1)',
+                          color: '#2ec4b6',
+                          fontSize: '0.75rem',
+                          fontWeight: '600',
+                          textTransform: 'capitalize',
+                        }}>
+                          {ticket.category}
+                        </span>
+                      </td>
+                      <td>
+                        {new Date(ticket.updatedAt).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </td>
+                      <td style={{ textAlign: 'center' }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedTicketForResolve(ticket)
+                            setSatisfactionRating(10)
+                            setFirstContactResolved(true)
+                            setResolveModalOpen(true)
+                          }}
+                          style={{
+                            padding: '0.4rem 1rem',
+                            backgroundColor: '#2ec4b6',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '4px',
+                            fontSize: '0.75rem',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Resolve
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--muted)' }}>
+                No active tickets assigned to you.
+              </div>
+            )}
+          </div>
+        </article>
+
         <article className="edb-log-card">
           <div className="edb-log-head">
             <h2>Log History <span>{currentMonthLabel}</span></h2>
@@ -424,6 +542,85 @@ function EmployeeDashboardPage() {
                     disabled={actionLoading === 'note'}
                   >
                     {actionLoading === 'note' ? 'Saving...' : 'Save Note'}
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
+
+        {/* Resolve Ticket Modal */}
+        {resolveModalOpen && (
+          <div className="edb-note-modal-backdrop" role="presentation" onClick={() => setResolveModalOpen(false)}>
+            <section
+              className="edb-note-modal"
+              role="dialog"
+              aria-modal="true"
+              style={{ maxWidth: '400px', backgroundColor: '#0c2b36', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="edb-note-modal-head">
+                <div>
+                  <span>RESOLVE TICKET</span>
+                  <h2 style={{ fontSize: '1.1rem', margin: '0.2rem 0 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {selectedTicketForResolve?.subject}
+                  </h2>
+                </div>
+                <button type="button" onClick={() => setResolveModalOpen(false)} aria-label="Close resolve details">x</button>
+              </div>
+              
+              <div style={{ padding: '1rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.5rem', color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase' }}>
+                    Customer Satisfaction (1-10)
+                  </label>
+                  <select
+                    value={satisfactionRating}
+                    onChange={(e) => setSatisfactionRating(Number(e.target.value))}
+                    style={{
+                      width: '100%',
+                      padding: '0.6rem',
+                      borderRadius: '6px',
+                      backgroundColor: 'rgba(255,255,255,0.05)',
+                      color: '#fff',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      fontSize: '0.9rem',
+                    }}
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                      <option key={num} value={num} style={{ backgroundColor: '#0c2b36' }}>
+                        {num} - {num >= 9 ? 'Promoter' : num >= 7 ? 'Passive' : 'Detractor'}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <input
+                    type="checkbox"
+                    id="fcr-checkbox"
+                    checked={firstContactResolved}
+                    onChange={(e) => setFirstContactResolved(e.target.checked)}
+                    style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+                  />
+                  <label htmlFor="fcr-checkbox" style={{ fontSize: '0.85rem', cursor: 'pointer', color: 'rgba(255,255,255,0.8)' }}>
+                    Resolved on First Contact (FCR)
+                  </label>
+                </div>
+              </div>
+
+              <div className="edb-note-modal-foot">
+                <span>Move ticket to solved state</span>
+                <div>
+                  <button className="edb-note-cancel" type="button" onClick={() => setResolveModalOpen(false)}>Cancel</button>
+                  <button
+                    className="edb-note-save"
+                    type="button"
+                    onClick={handleResolveTicket}
+                    disabled={resolvingLoading}
+                    style={{ backgroundColor: '#2ec4b6' }}
+                  >
+                    {resolvingLoading ? 'Saving...' : 'Resolve'}
                   </button>
                 </div>
               </div>

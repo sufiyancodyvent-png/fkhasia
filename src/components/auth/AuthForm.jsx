@@ -10,6 +10,7 @@ function AuthForm({ mode = 'login' }) {
   const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const updateField = (field) => (event) => {
     setForm((current) => ({ ...current, [field]: event.target.value }))
@@ -78,8 +79,23 @@ function AuthForm({ mode = 'login' }) {
           Password
           <span className="input-shell">
             <Icon name="lock" size={21} />
-            <input type="password" placeholder="********" value={form.password} onChange={updateField('password')} required />
-            <Icon name="eye" size={21} />
+            <input type={showPassword ? 'text' : 'password'} placeholder="********" value={form.password} onChange={updateField('password')} required />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              <Icon name={showPassword ? 'eye-off' : 'eye'} size={21} />
+            </button>
           </span>
         </label>
 

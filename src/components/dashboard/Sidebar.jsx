@@ -7,6 +7,7 @@ const railItems = [
   { key: 'hr', icon: 'userCheck', label: 'Employee Directory', path: '/admin/employees', section: 'hr' },
   { key: 'live', icon: 'users', label: 'Live Users', path: '/admin/live-users', section: 'system' },
   { key: 'attendance', icon: 'clock', label: 'Attendance', path: '/admin/attendance', section: 'attendance' },
+  { key: 'support', icon: 'trending', label: 'Support Dash', path: '/admin/support-dashboard' },
 ]
 
 const hrItems = [
@@ -26,8 +27,9 @@ function Sidebar({ menuOpen, onOpenMenu, onToggleMenu }) {
   const hrActive = pathname.startsWith('/admin/departments') || pathname.startsWith('/admin/employees')
   const attendanceActive = pathname.startsWith('/admin/attendance')
   const liveActive = pathname.startsWith('/admin/live-users')
+  const supportActive = pathname.startsWith('/admin/support-dashboard')
   const visibleSection = hrActive ? 'hr' : attendanceActive ? 'attendance' : 'system'
-  const activeRailKey = hrActive ? 'hr' : attendanceActive ? 'attendance' : liveActive ? 'live' : 'dashboard'
+  const activeRailKey = hrActive ? 'hr' : attendanceActive ? 'attendance' : liveActive ? 'live' : supportActive ? 'support' : 'dashboard'
   const expandedItems = visibleSection === 'hr'
       ? hrItems
       : visibleSection === 'attendance'
@@ -35,6 +37,7 @@ function Sidebar({ menuOpen, onOpenMenu, onToggleMenu }) {
         : [
             { icon: 'trending', label: 'Dashboard', path: '/admin' },
             { icon: 'users', label: 'Live Users', path: '/admin/live-users' },
+            { icon: 'trending', label: 'Support Dash', path: '/admin/support-dashboard' },
           ]
   const sectionLabel = visibleSection === 'hr'
       ? 'HUMAN RESOURCE MANAGEMENT'
