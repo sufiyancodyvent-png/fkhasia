@@ -117,10 +117,10 @@ function AdminSupportDashboardPage() {
         ) : (
           <>
             <header className="support-dashboard-header">
-              <h1 style={{ display: 'flex', alignItems: 'center', fontSize: '24px', fontWeight: '700', color: '#ffffff', margin: 0 }}>
+              <h1 style={{ display: 'flex', alignItems: 'center', fontSize: '24px', fontWeight: '700', color: '#0f172a', margin: 0 }}>
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style={{ marginRight: '0.8rem', flexShrink: 0 }}>
-                  <path d="M5 6l9 10-9 10h6l9-10-9-10H5z" fill="#ffffff" />
-                  <path d="M13 6l9 10-9 10h6l9-10-9-10h-6z" fill="#00adb5" />
+                  <path d="M5 6l9 10-9 10h6l9-10-9-10H5z" fill="#0f172a" />
+                  <path d="M13 6l9 10-9 10h6l9-10-9-10h-6z" fill="#2563eb" />
                 </svg>
                 Support Team Performance Dashboard
               </h1>
@@ -133,9 +133,9 @@ function AdminSupportDashboardPage() {
                   onClick={() => navigate('/admin/dashboard')}
                   style={{
                     padding: '0.75rem 1.25rem',
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    color: '#a3c2cb',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    backgroundColor: '#ffffff',
+                    color: '#475569',
+                    border: '1px solid #cbd5e1',
                     borderRadius: '6px',
                     cursor: 'pointer',
                     fontSize: '0.875rem',
@@ -146,12 +146,12 @@ function AdminSupportDashboardPage() {
                     transition: 'all 0.2s',
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'
-                    e.target.style.color = '#fff'
+                    e.target.style.backgroundColor = '#f1f5f9'
+                    e.target.style.color = '#0f172a'
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'
-                    e.target.style.color = '#a3c2cb'
+                    e.target.style.backgroundColor = '#ffffff'
+                    e.target.style.color = '#475569'
                   }}
                 >
                   <i className="fa-solid fa-arrow-left" style={{ marginRight: '0.4rem' }}></i>
@@ -161,7 +161,7 @@ function AdminSupportDashboardPage() {
                   onClick={() => navigate('/admin/support/create-ticket')}
                   style={{
                     padding: '0.75rem 1.25rem',
-                    backgroundColor: '#2ec4b6',
+                    backgroundColor: '#2563eb',
                     color: '#fff',
                     border: 'none',
                     borderRadius: '6px',
@@ -173,8 +173,8 @@ function AdminSupportDashboardPage() {
                     gap: '0.5rem',
                     transition: 'background-color 0.2s',
                   }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#24a199'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = '#2ec4b6'}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = '#1d4ed8'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = '#2563eb'}
                 >
                   <i className="fa-solid fa-plus" style={{ marginRight: '0.4rem' }}></i>
                   Create Ticket
@@ -378,16 +378,8 @@ function AdminSupportDashboardPage() {
                       const photoUrl = agentPhotos[agent.name]
 
                       return (
-                        <div className="agent-row-card" key={agent.name} style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          backgroundColor: '#09222b',
-                          border: '1px solid rgba(255, 255, 255, 0.02)',
-                          borderRadius: '8px',
-                          padding: '12px 16px',
-                        }}>
-                          <div className="agent-profile" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <div className="agent-row-card" key={agent.name}>
+                          <div className="agent-profile">
                             {photoUrl ? (
                               <img
                                 src={photoUrl}
@@ -397,58 +389,37 @@ function AdminSupportDashboardPage() {
                                   height: '44px',
                                   borderRadius: '50%',
                                   objectFit: 'cover',
-                                  border: '2px solid #00adb5',
+                                  border: '2px solid #2563eb',
                                 }}
                               />
                             ) : (
-                              <div className="agent-avatar-circle" style={{
-                                width: '44px',
-                                height: '44px',
-                                borderRadius: '50%',
-                                border: '2px solid #00adb5',
-                                backgroundColor: '#0c2b36',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontWeight: '800',
-                                color: '#00adb5',
-                              }}>
+                              <div className="agent-avatar-circle">
                                 {initials}
                               </div>
                             )}
-                            <div className="agent-meta" style={{ display: 'flex', flexDirection: 'column' }}>
-                              <span className="agent-name" style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff' }}>
+                            <div className="agent-meta">
+                              <span className="agent-name">
                                 {agent.name}
                               </span>
-                              <div className="agent-stats" style={{ display: 'flex', gap: '10px', fontSize: '11px', color: '#7fa1ab', marginTop: '2px', textTransform: 'uppercase' }}>
+                              <div className="agent-stats">
                                 <span>
-                                  Open: <strong style={{ color: '#fff' }}>{agent.open}</strong>
+                                  Open: <strong>{agent.open}</strong>
                                 </span>
                                 <span>
-                                  Solved: <strong style={{ color: '#fff' }}>{formatNumber(agent.solved)}</strong>
+                                  Solved: <strong>{formatNumber(agent.solved)}</strong>
                                 </span>
                               </div>
                             </div>
                           </div>
                           
-                          <div className="agent-satisfaction-badge" style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            gap: '0.5rem',
-                            backgroundColor: 'rgba(0, 173, 181, 0.08)',
-                            border: '1px solid rgba(0, 173, 181, 0.18)',
-                            borderRadius: '6px',
-                            padding: '8px 12px',
-                            minWidth: '120px',
-                          }}>
+                          <div className="agent-satisfaction-badge">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
                               <path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4-3.9-3.8 5.4-.8L12 2z" fill="#f39c12" />
                               <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#f39c12" strokeWidth="1.5" strokeDasharray="3 3" />
                             </svg>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: '1.1' }}>
-                              <strong style={{ fontSize: '1.1rem', color: '#00adb5', fontWeight: '800' }}>{agent.satisfaction}%</strong>
-                              <span style={{ fontSize: '0.65rem', color: '#7fa1ab', textTransform: 'uppercase', fontWeight: '700', letterSpacing: '0.3px' }}>Satisfaction</span>
+                              <strong>{agent.satisfaction}%</strong>
+                              <span>Satisfaction</span>
                             </div>
                           </div>
                         </div>

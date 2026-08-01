@@ -2429,7 +2429,7 @@ button {
 }
 
 .auth-copy p:last-child {
-  margin-bottom: 66px;
+  margin-bottom: 20px;
   color: #587096;
   font-size: 24px;
   font-weight: 400;
@@ -2999,6 +2999,7 @@ button {
     min-height: 0 !important;
     height: 100vh !important;
     align-items: start !important;
+    align-content: center !important;
     padding: 54px 70px 32px 126px !important;
     overflow: hidden !important;
   }
@@ -3018,7 +3019,7 @@ button {
 
   .auth-shell .auth-copy p:last-child {
     max-width: 650px !important;
-    margin: 0 0 66px !important;
+    margin: 0 0 20px !important;
     color: #587096 !important;
     font-size: 24px !important;
     font-weight: 390 !important;
@@ -3123,7 +3124,7 @@ button {
   }
 
   .auth-shell .auth-copy p:last-child {
-    margin-bottom: 42px !important;
+    margin-bottom: 20px !important;
     font-size: 21px !important;
   }
 
@@ -3248,7 +3249,7 @@ button {
   }
 
   .auth-shell .auth-copy p:last-child {
-    margin-bottom: 42px !important;
+    margin-bottom: 20px !important;
     font-size: 18px !important;
     line-height: 1.25 !important;
   }
@@ -3347,7 +3348,7 @@ button {
   }
 
   .auth-shell .auth-copy p:last-child {
-    margin-bottom: 26px !important;
+    margin-bottom: 20px !important;
   }
 
   .auth-shell .auth-form {

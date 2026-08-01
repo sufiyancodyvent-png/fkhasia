@@ -3,8 +3,13 @@ import BrandMark from '../brand/BrandMark'
 function AuthBrandPanel() {
   return (
     <section className="auth-brand-panel">
+      <style>{`
+        #root .auth-brand-content {
+          margin-top: auto !important;
+          margin-bottom: auto !important;
+        }
+      `}</style>
       <div className="auth-brand-content">
-        <BrandMark />
         <div>
           <h1>FKH ASIA</h1>
           <p className="auth-tagline">Streamline Your Workforce, Payroll, And Performance</p>

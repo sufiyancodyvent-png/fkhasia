@@ -1,8 +1,11 @@
 import express from 'express'
 import crypto from 'crypto'
+import jwt from 'jsonwebtoken'
+import { env } from '../config/env.js'
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { signToken } from '../utils/tokens.js'
 import { requireAuth } from '../middleware/auth.js'
+import { requireGateway } from '../middleware/gatewayMiddleware.js'
 import { User } from '../models/User.js'
 import { UserSession } from '../models/UserSession.js'
 
@@ -20,7 +23,29 @@ function publicUser(user) {
   }
 }
 
-router.post('/login', asyncHandler(async (req, res) => {
+router.post('/gateway', asyncHandler(async (req, res) => {
+  const { email, password } = req.body
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' })
+  }
+
+  const user = await User.findOne({ email: String(email).toLowerCase().trim() }).select('+passwordHash')
+
+  if (!user || user.role !== 'gateway' || !(await user.verifyPassword(password))) {
+    return res.status(401).json({ message: 'Invalid email or password' })
+  }
+
+  const gatewayToken = jwt.sign(
+    { sub: user._id.toString(), role: 'gateway' },
+    env.jwtSecret,
+    { expiresIn: '30m' }
+  )
+
+  res.json({ token: gatewayToken })
+}))
+
+router.post('/login', requireGateway, asyncHandler(async (req, res) => {
   const { email, password } = req.body
 
   if (!email || !password) {

@@ -1,8 +1,8 @@
 /* Support Team Performance Dashboard Styles */
 
 .support-dashboard-container {
-  background-color: #071c24;
-  color: #e2f1f5;
+  background-color: #f8fafc;
+  color: #334155;
   min-height: calc(100vh - 70px);
   padding: 24px;
   font-family: 'Nunito', sans-serif;
@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #e2e8f0;
   padding-bottom: 16px;
 }
 
@@ -24,15 +24,15 @@
   font-size: 24px;
   font-weight: 700;
   margin: 0;
-  color: #ffffff;
+  color: #0f172a;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .support-dashboard-header .logo-mark {
-  background-color: #00adb5;
-  color: #071c24;
+  background-color: #2563eb;
+  color: #ffffff;
   width: 32px;
   height: 32px;
   display: flex;
@@ -46,17 +46,17 @@
 .support-dashboard-filter {
   display: flex;
   align-items: center;
-  background-color: #0c2b36;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   padding: 6px 14px;
   border-radius: 20px;
   gap: 8px;
   font-size: 13px;
-  color: #a3c2cb;
+  color: #475569;
 }
 
 .support-dashboard-filter svg {
-  color: #00adb5;
+  color: #2563eb;
 }
 
 /* Main Grid Layout */
@@ -88,11 +88,11 @@
 
 /* Card Styling */
 .support-card {
-  background-color: #0c2b36;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
 }
@@ -100,7 +100,7 @@
 .support-card-title {
   font-size: 14px;
   font-weight: 700;
-  color: #a3c2cb;
+  color: #64748b;
   margin-bottom: 16px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -114,8 +114,8 @@
 }
 
 .ticket-count-tile {
-  background-color: #09222b;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
   padding: 16px;
   display: flex;
@@ -127,22 +127,22 @@
 
 .ticket-count-tile .tile-label {
   font-size: 13px;
-  color: #7fa1ab;
+  color: #64748b;
   font-weight: 600;
 }
 
 .ticket-count-tile .tile-value {
   font-size: 32px;
   font-weight: 800;
-  color: #39b8d2;
+  color: #2563eb;
 }
 
 .ticket-count-tile.escalated .tile-value {
-  color: #ff5e7e;
+  color: #ef4444;
 }
 
 .ticket-count-tile.solved .tile-value {
-  color: #2ec4b6;
+  color: #16a34a;
 }
 
 /* Gauge Chart Layouts */
@@ -162,7 +162,7 @@
 
 .gauge-bg {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.08);
+  stroke: #e2e8f0;
   stroke-width: 14;
 }
 
@@ -175,7 +175,7 @@
 
 /* Gauge Color Variations */
 .gauge-fill.cyan {
-  stroke: #00adb5;
+  stroke: #2563eb;
 }
 
 .gauge-fill.green-yellow-red {
@@ -186,12 +186,12 @@
 .gauge-needle {
   transform-origin: 80px 80px;
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  fill: #e2f1f5;
+  fill: #334155;
 }
 
 .gauge-center-dot {
-  fill: #0c2b36;
-  stroke: #e2f1f5;
+  fill: #ffffff;
+  stroke: #334155;
   stroke-width: 3;
 }
 
@@ -208,13 +208,13 @@
 .gauge-value-overlay strong {
   font-size: 36px;
   font-weight: 800;
-  color: #ffffff;
+  color: #0f172a;
   line-height: 1;
 }
 
 .gauge-value-overlay span {
   font-size: 11px;
-  color: #7fa1ab;
+  color: #64748b;
   text-transform: uppercase;
   margin-top: 4px;
 }
@@ -222,7 +222,7 @@
 /* Range Label for Occupancy */
 .gauge-range-label {
   font-size: 12px;
-  color: #7fa1ab;
+  color: #64748b;
   text-align: center;
   margin-top: 8px;
 }
@@ -249,16 +249,16 @@
 }
 
 .category-name {
-  color: #a3c2cb;
+  color: #64748b;
 }
 
 .category-value {
-  color: #ffffff;
+  color: #0f172a;
 }
 
 .category-progress-bg {
   height: 8px;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: #f1f5f9;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -270,10 +270,10 @@
 }
 
 /* Progress Fill Colors */
-.progress-blue { background-color: #38bdf8; }
-.progress-teal { background-color: #2ec4b6; }
-.progress-orange { background-color: #f39c12; }
-.progress-red { background-color: #ff5e7e; }
+.progress-blue { background-color: #3b82f6; }
+.progress-teal { background-color: #10b981; }
+.progress-orange { background-color: #f97316; }
+.progress-red { background-color: #ef4444; }
 
 /* NPS breakdown pills */
 .nps-legend-grid {
@@ -287,7 +287,8 @@
 .nps-legend-item {
   display: flex;
   align-items: center;
-  background-color: #09222b;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
   padding: 8px 12px;
   font-size: 13px;
@@ -306,12 +307,12 @@
   color: #ffffff;
 }
 
-.nps-legend-badge.promoter { background-color: #2ec4b6; }
-.nps-legend-badge.passive { background-color: #f39c12; }
-.nps-legend-badge.detractor { background-color: #ff5e7e; }
+.nps-legend-badge.promoter { background-color: #10b981; }
+.nps-legend-badge.passive { background-color: #f97316; }
+.nps-legend-badge.detractor { background-color: #ef4444; }
 
 .nps-legend-text {
-  color: #a3c2cb;
+  color: #64748b;
 }
 
 /* Top Agents List */
@@ -325,8 +326,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #09222b;
-  border: 1px solid rgba(255, 255, 255, 0.02);
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 12px 16px;
   transition: transform 0.2s, background-color 0.2s;
@@ -334,7 +335,7 @@
 
 .agent-row-card:hover {
   transform: translateY(-2px);
-  background-color: #0e3442;
+  background-color: #f1f5f9;
 }
 
 .agent-profile {
@@ -349,13 +350,13 @@
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #00adb5;
-  background-color: #0c2b36;
+  border: 2px solid #2563eb;
+  background-color: #eff6ff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  color: #00adb5;
+  color: #2563eb;
 }
 
 .agent-meta {
@@ -366,20 +367,20 @@
 .agent-name {
   font-size: 14px;
   font-weight: 700;
-  color: #ffffff;
+  color: #0f172a;
 }
 
 .agent-stats {
   display: flex;
   gap: 10px;
   font-size: 11px;
-  color: #7fa1ab;
+  color: #64748b;
   margin-top: 2px;
   text-transform: uppercase;
 }
 
 .agent-stats strong {
-  color: #ffffff;
+  color: #334155;
 }
 
 .agent-satisfaction-badge {
@@ -387,8 +388,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 173, 181, 0.1);
-  border: 1px solid rgba(0, 173, 181, 0.2);
+  background-color: #eff6ff;
+  border: 1px solid rgba(37, 99, 235, 0.2);
   border-radius: 6px;
   padding: 6px 12px;
   min-width: 90px;
@@ -397,13 +398,13 @@
 
 .agent-satisfaction-badge strong {
   font-size: 14px;
-  color: #00adb5;
+  color: #2563eb;
   font-weight: 800;
 }
 
 .agent-satisfaction-badge span {
   font-size: 8px;
-  color: #7fa1ab;
+  color: #64748b;
   text-transform: uppercase;
   font-weight: 700;
 }

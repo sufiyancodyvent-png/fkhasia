@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Icon from '../icons/Icon'
-import { login, saveSession } from '../../lib/api'
-import logo from '../../assets/logo.png'
+import { login, saveSession, gatewayLogin } from '../../lib/api'
 
 function AuthForm({ mode = 'login' }) {
   const navigate = useNavigate()
+  const { role } = useParams()
   const isRegister = mode === 'register'
+  const isGateway = mode === 'gateway'
   const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -22,9 +23,23 @@ function AuthForm({ mode = 'login' }) {
     setLoading(true)
 
     try {
-      const session = await login(form.email, form.password)
-      saveSession(session)
-      navigate(session.user.role === 'admin' || session.user.role === 'manager' ? '/admin' : '/employee/dashboard')
+      if (isGateway) {
+        await gatewayLogin(form.email, form.password)
+        navigate('/select-role')
+      } else {
+        const session = await login(form.email, form.password)
+        saveSession(session)
+        
+        // Strict Role Validation based on selected login page
+        if (role) {
+          const expectedRole = role === 'heads' ? 'admin' : role === 'team' ? 'employee' : role;
+          if (session.user.role !== expectedRole) {
+            throw new Error(`Your account does not have ${role} permissions.`);
+          }
+        }
+        
+        navigate(session.user.role === 'admin' || session.user.role === 'manager' ? '/admin' : '/employee/dashboard')
+      }
     } catch (err) {
       setError(err.message)
     } finally {
@@ -34,24 +49,42 @@ function AuthForm({ mode = 'login' }) {
 
   return (
     <section className="auth-form-panel auth-card" aria-label="Authentication">
+      <style>{`
+        #root .auth-copy p:last-child {
+          margin-bottom: 20px !important;
+        }
+      `}</style>
       <button className="auth-theme-indicator" type="button" aria-label="Theme">
         <Icon name="moon" size={18} />
       </button>
-      <div className="auth-logo-badge">
-        <img src={logo} alt="FKH ASIA" />
-      </div>
+
       <div className="auth-copy">
         <h2>
           {isRegister ? (
             'Create Account'
-          ) : (
+          ) : isGateway ? (
             <>
               <span className="auth-title-desktop">Sign In</span>
               <span className="auth-title-mobile">FKH ASIA</span>
             </>
+          ) : (
+            <>
+              <span className="auth-title-desktop">
+                {role === 'heads'
+                  ? 'Heads Login'
+                  : role === 'manager'
+                  ? 'Manager Login'
+                  : role === 'supervisor'
+                  ? 'Supervisor Login'
+                  : role === 'team'
+                  ? 'Team Login'
+                  : 'Sign In'}
+              </span>
+              <span className="auth-title-mobile">FKH ASIA</span>
+            </>
           )}
         </h2>
-        <p>
+        <p style={{ marginBottom: '20px' }}>
           {isRegister
             ? 'Register Your Workspace Profile To Access Your Dashboard'
             : 'Please Enter Your Details To Access Your Dashboard'}
@@ -69,17 +102,23 @@ function AuthForm({ mode = 'login' }) {
           </label>
         )}
         <label>
-          Email Address
+          Sign In
           <span className="input-shell">
-            <Icon name="mail" size={21} />
-            <input type="email" placeholder="Name@Company.Com" value={form.email} onChange={updateField('email')} required />
+            <Icon name="user" size={21} />
+            <input 
+              type="text" 
+              placeholder="Sign In" 
+              value={form.email} 
+              onChange={updateField('email')} 
+              required 
+            />
           </span>
         </label>
         <label>
           Password
           <span className="input-shell">
             <Icon name="lock" size={21} />
-            <input type={showPassword ? 'text' : 'password'} placeholder="********" value={form.password} onChange={updateField('password')} required />
+            <input type={showPassword ? 'text' : 'password'} placeholder="Password" value={form.password} onChange={updateField('password')} required />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -109,7 +148,7 @@ function AuthForm({ mode = 'login' }) {
           </label>
         )}
 
-        {!isRegister && (
+        {!isRegister && !isGateway && (
           <label className="check-row">
             <input type="checkbox" />
             <span>Stay Signed In</span>
@@ -124,25 +163,6 @@ function AuthForm({ mode = 'login' }) {
         </button>
       </form>
 
-      {!isRegister && (
-        <section className="bank-association" aria-label="Bank associations">
-          <p>In Association With Multiple Banks</p>
-          <div className="bank-logo-row">
-            <span className="bank-logo">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_Habib_Bank.svg" alt="HBL" />
-            </span>
-            <span className="bank-logo">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/United_Bank_Limited_logo.svg" alt="UBL" />
-            </span>
-            <span className="bank-logo">
-              <img src="https://www.meezanbank.com/wp-content/themes/mbl/images/logo.png" alt="Meezan Bank" />
-            </span>
-            <span className="bank-logo">
-              <img src="https://www.mcb.com.pk/assets/images/mcb-logo.svg" alt="MCB Bank" />
-            </span>
-          </div>
-        </section>
-      )}
     </section>
   )
 }

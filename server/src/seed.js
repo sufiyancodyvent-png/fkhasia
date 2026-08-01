@@ -51,6 +51,22 @@ async function seed() {
     profile: { department: 'General', designation: 'Employee' },
   })
 
+  await upsertUser({
+    email: 'fkhasia@gmail.com',
+    password: process.env.SEED_GATEWAY_PASSWORD || 'fkhasia[]2026',
+    role: 'gateway',
+    name: 'Gateway User',
+    profile: { department: 'Security', designation: 'Gateway Security' },
+  })
+
+  await upsertUser({
+    email: 'supervisor@fkhasia.com',
+    password: 'SupervisorUser@2026!',
+    role: 'supervisor',
+    name: 'Supervisor User',
+    profile: { department: 'General', designation: 'Supervisor' },
+  })
+
   // Seed the 5 agents from the support dashboard screenshot
   const agent1 = await upsertUser({
     email: 'tanner@fkhasia.com',

@@ -1,5 +1,23 @@
 const API_BASE = import.meta.env.VITE_API_URL || '/api'
 const SESSION_KEY = 'fkhasia_session'
+const GATEWAY_KEY = 'fkhasia_gateway'
+
+export function getGatewayToken() {
+  return sessionStorage.getItem(GATEWAY_KEY) || null
+}
+
+export function saveGatewayToken(token) {
+  sessionStorage.setItem(GATEWAY_KEY, token)
+}
+
+export function clearGatewayToken() {
+  sessionStorage.removeItem(GATEWAY_KEY)
+}
+
+export function gatewayHeader() {
+  const token = getGatewayToken()
+  return token ? { 'X-Gateway-Token': token } : {}
+}
 
 export function getSession() {
   try {
@@ -22,12 +40,77 @@ export function authHeader() {
   return session?.token ? { Authorization: `Bearer ${session.token}` } : {}
 }
 
+function mockApiRequest(path, options, role) {
+  const url = path.split('?')[0];
+
+  if (url === '/presence/heartbeat') {
+    return Promise.resolve({ ok: true });
+  }
+  if (url === '/presence/sessions') {
+    return Promise.resolve([
+      { user: { name: 'General Admin', email: 'admin@fkhasia.com' }, currentPath: '/admin', lastSeenAt: new Date().toISOString() },
+      { user: { name: 'General Employee', email: 'employee@fkhasia.com' }, currentPath: '/employee/dashboard', lastSeenAt: new Date().toISOString() }
+    ]);
+  }
+  if (url === '/messages/mine') {
+    return Promise.resolve([]);
+  }
+  if (url === '/dashboard/admin') {
+    return Promise.resolve({
+      overview: { employeeCount: 15, presentToday: 12, lateEntry: 2, absentToday: 3 },
+      approvals: { leaveRequests: 3, attendanceApprovals: 4 }
+    });
+  }
+  if (url === '/dashboard/employee') {
+    return Promise.resolve({
+      user: { name: role === 'admin' ? 'General Admin' : 'General Employee', email: role === 'admin' ? 'admin@fkhasia.com' : 'employee@fkhasia.com', role: role },
+      todayLog: { clockInAt: new Date(new Date().setHours(9, 0, 0)).toISOString(), status: 'approved', workMode: 'Office', note: 'Working hard' },
+      summary: { attendanceRate: 95, daysWorked: 18, workedHours: 144 }
+    });
+  }
+  if (url === '/attendance/summary/me' || url === '/attendance/all') {
+    return Promise.resolve([]);
+  }
+  if (url === '/settings/attendance') {
+    return Promise.resolve({ timezone: 'Asia/Karachi', allowManualEntry: true, autoApproveAttendance: false, monthlyGoalHours: 160, shiftStart: '09:00', shiftEnd: '18:00', lateGraceMinutes: 10, earlyLeaveGraceMinutes: 10, breakMinutesAllowed: 60, workModes: ['In Office (HQ)', 'Remote', 'Hybrid'] });
+  }
+  if (url === '/users') {
+    return Promise.resolve([
+      { _id: 'u1', name: 'General Admin', email: 'admin@fkhasia.com', role: 'admin', status: 'active', profile: { department: 'Administration', designation: 'Owner' } },
+      { _id: 'u2', name: 'General Employee', email: 'employee@fkhasia.com', role: 'employee', status: 'active', profile: { department: 'General', designation: 'Employee' } }
+    ]);
+  }
+  if (url === '/departments') {
+    return Promise.resolve([
+      { _id: 'd1', name: 'Administration', description: 'Management team', status: 'active' },
+      { _id: 'd2', name: 'General', description: 'Staff members', status: 'active' }
+    ]);
+  }
+  if (url.startsWith('/support')) {
+    return Promise.resolve({
+      tickets: [
+        { _id: 't1', subject: 'Server connection timeout', status: 'open', category: 'Bug', assignedTo: { name: 'General Employee' }, createdAt: new Date().toISOString() },
+        { _id: 't2', subject: 'Password reset request', status: 'solved', category: 'Setup Request', assignedTo: { name: 'General Employee' }, satisfactionRating: 9, createdAt: new Date().toISOString() }
+      ],
+      pagination: { page: 1, limit: 20, total: 2, pages: 1 }
+    });
+  }
+
+  return Promise.resolve({ ok: true });
+}
+
 export async function apiRequest(path, options = {}) {
+  const session = getSession()
+  if (session?.token?.startsWith('mock-')) {
+    return mockApiRequest(path, options, session.user.role)
+  }
+
   const response = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
       ...authHeader(),
+      ...gatewayHeader(),
       ...options.headers,
     },
   })
@@ -45,6 +128,18 @@ export function login(email, password) {
     method: 'POST',
     body: JSON.stringify({ email, password }),
   })
+}
+
+export async function gatewayLogin(email, password) {
+  const data = await apiRequest('/auth/gateway', {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  })
+
+  if (data?.token) {
+    saveGatewayToken(data.token)
+  }
+  return data
 }
 
 export function logout() {

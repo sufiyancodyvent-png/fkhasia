@@ -43,8 +43,8 @@ export const env = {
   jwtSecret: process.env.JWT_SECRET,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   seedAdminEmail: process.env.SEED_ADMIN_EMAIL || 'admin@fkhasia.com',
-  seedAdminPassword: process.env.SEED_ADMIN_PASSWORD,
+  seedAdminPassword: process.env.SEED_ADMIN_PASSWORD || 'AdminUser@2026!',
   seedEmployeeEmail: process.env.SEED_EMPLOYEE_EMAIL || 'employee@fkhasia.com',
-  seedEmployeePassword: process.env.SEED_EMPLOYEE_PASSWORD,
+  seedEmployeePassword: process.env.SEED_EMPLOYEE_PASSWORD || 'EmployeeUser@2026!',
   timezone: process.env.TZ || 'Asia/Karachi',
 }
